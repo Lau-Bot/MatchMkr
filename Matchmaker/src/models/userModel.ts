@@ -65,7 +65,7 @@ class UserModel {
 	}
 
 	async creatematch(match: object, number: number) {
-		const result = (await this.db.query('INSERT INTO partido (nombrePartido, idUsuarioOwner, fechaDesde, fechaHasta, idEstadoPartido, direccion, idDeporte, jugadoresFaltantes) SET ?', [match.nombrePartido], [number], [Date.now()], [match.fechaHasta], [1], [match.direccion], [1], [match.jugadoresFaltantes] ;
+		const result = (await this.db.query('INSERT INTO partido (nombrePartido, idUsuarioOwner, fechaDesde, fechaHasta, idEstadoPartido, direccion, idDeporte, jugadoresFaltantes) SET ?', [match.nombrePartido], [number], [Date.now()], [match.fechaHasta], [1], [match.direccion], [1], [match.jugadoresFaltantes]))[0].affectedRows;
 		console.log(result);
 		return result;
 	}

@@ -82,7 +82,7 @@ class UserModel {
     }
     creatematch(match, number) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = (yield this.db.query('INSERT INTO partido (nombrePartido, idUsuarioOwner, fechaDesde, fechaHasta, idEstadoPartido, direccion, idDeporte, jugadoresFaltantes) SET ?', [match.nombrePartido], [number], [Date.now()], [match.fechaHasta], [1], [match.direccion], [1], [match.jugadoresFaltantes]));
+            const result = (yield this.db.query('INSERT INTO partido (nombrePartido, idUsuarioOwner, fechaDesde, fechaHasta, idEstadoPartido, direccion, idDeporte, jugadoresFaltantes) SET ?', [match.nombrePartido], [number], [Date.now()], [match.fechaHasta], [1], [match.direccion], [1], [match.jugadoresFaltantes]))[0].affectedRows;
             console.log(result);
             return result;
         });
