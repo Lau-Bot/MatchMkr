@@ -1,0 +1,66 @@
+<table border="1" margin="10%" background-color="#FFFFFF">
+    <div class="col-15">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+
+                        <th scope="col">Artículo</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Subtotal</th>
+
+                    </tr>
+
+                </thead>
+                <tbody>
+                    {{#each carrito}}
+                    <tr>
+                        <th>{{id}}</th>
+                        <th>{{nombre}}</th>
+                        <th>{{precio}}</th>
+                        <th>{{cantidad}}</th>
+                        <th>$ {{subtotal}}</th>
+                    </tr>
+                    {{else}}
+                    <tr>
+                        <td colspan="5">Tu carrito está vacío!!</td>
+
+                    </tr>
+
+                    {{/each}}
+                    <tr>
+                        <td colspan="4">Total:</td>
+                        <td> $ {{total}}</td>
+                    </tr>
+                </tbody>
+
+
+            </table>
+
+
+</table>
+
+</div>
+</div>
+</br>
+
+
+</br>
+
+<br>
+<h3>DIRECCION DE ENTREGA</h3>
+<form method="post" action="./confirmar">
+    <input type="text" name="calle" placeholder="Calle" required>
+    <input type="number" name="altura" placeholder="Altura" required>
+    <input type="float" name="total" value="{{total}}" hidden>
+
+    {{#if flag}}
+    <button class="btn btn-success" type="submit">Confirmar compra</button>
+    {{else}}
+    <button class="btn btn-success" disabled>Confirmar compra</button>
+    {{/if}}
+</form>
+
+<a class="btn btn-primary" href="../articulos/listar">Volver</a>

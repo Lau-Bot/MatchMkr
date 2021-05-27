@@ -1,0 +1,19 @@
+{{home.nombre}}<BR>
+<table border="1">
+    <theader>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>password</th>
+    </theader>
+    {{#each usuarios}}
+    <tr>
+        <td>{{id}}</td>
+        <td>{{nombre}}</td>
+        <td>{{password}}</td>
+    </tr>
+    {{else}}
+    <tr>
+        <td colspan="4">No hay mas filas</td>
+    </tr>
+    {{/each}}
+</table>
