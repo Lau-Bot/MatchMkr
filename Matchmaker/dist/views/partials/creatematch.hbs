@@ -9,24 +9,24 @@ body {
   background-size: cover;
 }
 </style>
-<form action="post" method="creatematch" class="form-group">
+<form action="./crearpartido/{{id}}" method="post" class="form-group">
 
-    <input type="text" placeholder="Nombre del partido..." value="nombrePartido" class="form-control">
+    <input type="text" name="nombrePartido" placeholder="Nombre del partido..." value="" class="form-control">
     <br>
 
-    <input type="text" placeholder="Direccion del partido (WIP)" value="direccion" class="form-control">
+    <input type="text" name="direccion" placeholder="Direccion del partido (WIP)" value="" class="form-control">
     <br>
 
-    <input type="datetime" value="fechaHasta" class="form-control">
+    <input type="datetime" name="fechaHasta" placeholder="fechaHasta" value="" class="form-control">
 
-    <input type="number" placeholder="Jugadores faltantes..." value="jugadoresFaltantes" class="form-control">
+    <input type="number" name="jugadoresFaltantes" placeholder="Jugadores faltantes" value="" class="form-control">
 
     <br>
     <br>
-    <form action="./crearpartido/{{id}}" method="post">
+    
         <div>
             <button class="btn btn-primary" type="submit">Crear partido</button>
             <a class="btn btn-info" href="../user/home">Volver</a>
         </div>
-    </form>
+    
 </form>

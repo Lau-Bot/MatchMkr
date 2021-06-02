@@ -31,7 +31,9 @@ class UserController {
             console.log(usuario);
             console.log(password);
             console.log(result);
-            if ((result === null || result === void 0 ? void 0 : result.usuario) == usuario && (result === null || result === void 0 ? void 0 : result.password) == password && (result === null || result === void 0 ? void 0 : result.rol) == true) {
+            if ((result === null || result === void 0 ? void 0 : result.usuario) == usuario &&
+                (result === null || result === void 0 ? void 0 : result.password) == password &&
+                (result === null || result === void 0 ? void 0 : result.rol) == true) {
                 req.session.user = result;
                 req.session.auth = true;
                 req.session.adminkey = true;
@@ -65,7 +67,7 @@ class UserController {
     home(req, res) {
         console.log(req.body);
         if (!req.session.auth) {
-            req.flash('error_session', 'Debes iniciar sesion para ver esta seccion');
+            req.flash("error_session", "Debes iniciar sesion para ver esta seccion");
             res.redirect("./error");
             // res.redirect("/");
         }
@@ -75,7 +77,7 @@ class UserController {
     }
     process(req, res) {
         console.log(req.body);
-        res.send('Datos recibidos!!!');
+        res.send("Datos recibidos!!!");
         //res.render("partials/home",{listado});
     }
     //CRUD
@@ -107,9 +109,9 @@ class UserController {
             const busqueda = yield userModel_1.default.buscarNombre(usuario.nombre);
             if (!busqueda) {
                 const result = yield userModel_1.default.crear(usuario);
-                return res.json({ message: 'User saved!!' });
+                return res.json({ message: "User saved!!" });
             }
-            return res.json({ message: 'User exists!!' });
+            return res.json({ message: "User exists!!" });
         });
     }
     update(req, res) {
@@ -118,7 +120,7 @@ class UserController {
             const { id } = req.params;
             const result = yield userModel_1.default.actualizar(req.body, id);
             //res.send('Usuario '+ req.params.id +' actualizado!!!');
-            return res.json({ text: 'updating a user ' + id });
+            return res.json({ text: "updating a user " + id });
         });
     }
     delete(req, res) {
@@ -128,28 +130,28 @@ class UserController {
             const { id } = req.params; // hacemos detrucsturing y obtenemos el ID. Es decir, obtenemos una parte de un objeto JS.
             const result = yield userModel_1.default.eliminar(id);
             // return res.json({ text: 'deleting a user ' + id });
-            res.redirect('../controls');
+            res.redirect("../controls");
         });
     }
     //FIN CRUD
     control(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             if (!req.session.auth) {
-                req.flash('error_session', 'Debes iniciar sesion para ver esta seccion');
+                req.flash("error_session", "Debes iniciar sesion para ver esta seccion");
                 res.redirect("./error");
                 // res.redirect("/");
             }
             //res.send('Controles');
             const usuarios = yield userModel_1.default.listar();
             const users = usuarios;
-            res.render('partials/controls', { users: usuarios, mi_session: true });
+            res.render("partials/controls", { users: usuarios, mi_session: true });
             //res.render('partials/controls', { users: {} });
         });
     }
     procesar(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             if (!req.session.auth) {
-                req.flash('error_session', 'Debes iniciar sesion para ver esta seccion');
+                req.flash("error_session", "Debes iniciar sesion para ver esta seccion");
                 res.redirect("./error");
                 //res.redirect("/");
             }
@@ -168,8 +170,12 @@ class UserController {
                 }
             }
             console.log(usuarios);
-            res.render("partials/seleccion", { usuarios, home: req.session.user, mi_session: true });
-            res.render('partials/procesar');
+            res.render("partials/seleccion", {
+                usuarios,
+                home: req.session.user,
+                mi_session: true,
+            });
+            res.render("partials/procesar");
         });
     }
     endSession(req, res) {
@@ -182,7 +188,7 @@ class UserController {
     }
     showcreatematchpage(req, res) {
         if (!req.session.auth) {
-            req.flash('error_session', 'Debes iniciar sesion para crear un partido');
+            req.flash("error_session", "Debes iniciar sesion para crear un partido");
             res.redirect("./error");
             //res.redirect("/");
         }
@@ -192,9 +198,11 @@ class UserController {
     creatematch(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const match = req.body;
+            console.log("aca");
             console.log(req.body);
             const idOwner = req.session.userkey;
             yield userModel_1.default.creatematch(match, idOwner);
+            res.render("partials/creacionOk");
         });
     }
 }
