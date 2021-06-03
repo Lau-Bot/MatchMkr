@@ -103,7 +103,7 @@ class UserController {
         delete usuario.repassword;
         console.log(req.body);
         //res.send('Usuario agregado!!!');
-        const busqueda = await userModel.buscarNombre(usuario.nombre);
+        const busqueda = await userModel.buscarNombre(usuario.usuario);
         if (!busqueda) {
             const result = await userModel.crear(usuario);
             return res.json({ message: "User saved!!" });

@@ -1,3 +1,16 @@
+<head>
+     <style>
+ input:valid,
+textarea:valid {
+    background: rgb(106, 255, 106);
+}
+
+input:invalid,
+textarea:invalid {
+    background: rgb(255, 96, 96);
+}   
+</style>
+</head>
 <div class="container p-4">
     <div class="row">
         <div class="col-md-4 mx-auto">
@@ -8,19 +21,24 @@
                 <div class="card-body">
                     <form action="../user/signin" method="post">
                         <div class="form-group">
-                            <input
-                                type="text"
-                                name="usuario"
-                                placeholder="Usuario"
-                                class="form-control"
-                                autofocus
-                            />
-                            <input
-                                type="password"
-                                name="password"
-                                placeholder="Contraseña"
-                                class="form-control"
-                            />
+                        <input
+                            type="text"
+                            name="usuario"
+                            placeholder="Por ejemplo, Juan"
+                            class="form-control"
+                            minlength="3"
+                            maxlength="40" required
+                            required pattern="[A-Za-z0-9]+"
+                            title="Letras y números. Tamaño mínimo: 3. Tamaño máximo: 40"
+                            autofocus
+                        />
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Contraseña"
+                            class="form-control"
+                            minlength="3" required
+                        />
                             <button
                                 class="btn btn-success btn-block"
                             >Enviar</button>
