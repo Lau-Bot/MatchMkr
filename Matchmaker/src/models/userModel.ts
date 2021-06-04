@@ -56,6 +56,16 @@ class UserModel {
         return null;
     }
 
+    async buscarMail(email: string) {
+        const encontrado: any = await this.db.query(
+            "SELECT * FROM usuario WHERE email = ?",
+            [email]
+        );
+        //Ojo la consulta devuelve una tabla de una fila. (Array de array) Hay que desempaquetar y obtener la unica fila al enviar
+        if (encontrado.length > 1) return encontrado[0][0];
+        return null;
+    }
+
     //Devuelve 1 si logro crear un nuevo usuario de la tabla usuarios
     async crear(usuario: object) {
         const result = (

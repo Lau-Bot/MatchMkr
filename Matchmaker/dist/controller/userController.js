@@ -107,11 +107,13 @@ class UserController {
             console.log(req.body);
             //res.send('Usuario agregado!!!');
             const busqueda = yield userModel_1.default.buscarNombre(usuario.usuario);
-            if (!busqueda) {
+            const busquedaMail = yield userModel_1.default.buscarMail(usuario.email);
+            if (!busqueda && !busquedaMail) {
                 const result = yield userModel_1.default.crear(usuario);
-                return res.json({ message: "User saved!!" });
+                //res.redirect("./principal");
+                return res.json({ message: "Usuario guardado" });
             }
-            return res.json({ message: "User exists!!" });
+            return res.json({ message: "Nombre de usuario o email en uso" });
         });
     }
     update(req, res) {
