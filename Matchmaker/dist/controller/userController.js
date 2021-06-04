@@ -13,15 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const userModel_1 = __importDefault(require("../models/userModel"));
-// const listado = [
-// 	{ "id": "1", "usuario": "Juan Perez", "password": "123456" },
-// 	{ "id": "2", "usuario": "Pepe Cadena", "password": "123456" },
-// 	{ "id": "3", "usuario": "Martin Gonzalez", "password": "123456" }
-// ];
 class UserController {
     signin(req, res) {
         console.log(req.body);
-        //res.send('Sign In!!!');
         res.render("partials/signinForm");
     }
     login(req, res) {

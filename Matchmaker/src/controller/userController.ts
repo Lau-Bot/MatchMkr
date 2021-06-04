@@ -1,18 +1,11 @@
 import { Request, Response } from "express";
 import userModel from "../models/userModel";
-
 import flash from "connect-flash";
 
-// const listado = [
-// 	{ "id": "1", "usuario": "Juan Perez", "password": "123456" },
-// 	{ "id": "2", "usuario": "Pepe Cadena", "password": "123456" },
-// 	{ "id": "3", "usuario": "Martin Gonzalez", "password": "123456" }
-// ];
 
 class UserController {
     public signin(req: Request, res: Response) {
         console.log(req.body);
-        //res.send('Sign In!!!');
         res.render("partials/signinForm");
     }
 
