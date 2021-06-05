@@ -13,11 +13,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const compraModel_1 = __importDefault(require("../models/compraModel"));
-// const listado = [
-// 	{ "id": "1", "usuario": "Juan Perez", "password": "123456" },
-// 	{ "id": "2", "usuario": "Pepe Cadena", "password": "123456" },
-// 	{ "id": "3", "usuario": "Martin Gonzalez", "password": "123456" }
-// ];
 class CompraController {
     listar(req, res) {
         res.render("partials/carrito", { carrito: req.session.carrito, total: req.session.total });

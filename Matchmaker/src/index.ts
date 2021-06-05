@@ -16,6 +16,7 @@ declare module 'express-session' {
 		user: { [key: string]: any } | any;//en user guardaremos datos de interes
 		auth: boolean //indicara si el usuario ha iniciado sesion o no.
 		carrito: { [key: number]: any } | any;
+		partido: { [key: number]: any } | any;
 		total: number | any;
 		adminkey: boolean //para ver si sos admin :D
 		userkey: number | any;

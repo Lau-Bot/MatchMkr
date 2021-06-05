@@ -1,14 +1,6 @@
 import { Request, Response } from 'express';
 import  compraModel from '../models/compraModel';
-
 import flash from "connect-flash";
-
-// const listado = [
-// 	{ "id": "1", "usuario": "Juan Perez", "password": "123456" },
-// 	{ "id": "2", "usuario": "Pepe Cadena", "password": "123456" },
-// 	{ "id": "3", "usuario": "Martin Gonzalez", "password": "123456" }
-// ];
-
 
 class CompraController {
 
@@ -19,7 +11,7 @@ class CompraController {
     public verCarrito(req:Request,res:Response){
         if(!req.session.auth){  
              req.flash('error','Debe iniciar sesion para ver esta seccion');
-			res.redirect("../user/signin");
+			 res.redirect("../user/signin");
             return res.redirect("/"); 
           }
           
@@ -30,6 +22,7 @@ class CompraController {
             res.render("partials/carrito", {carrito:req.session.carrito, total:req.session.total, flag:true } )
         }
     }
+
     public async confirmar(req:Request,res:Response){
         if(!req.session.auth){    
             return res.redirect("/"); 
