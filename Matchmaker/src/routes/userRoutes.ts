@@ -9,13 +9,8 @@ class UserRoutes {
     config(): void {
         this.router.get("/", (req: Request, res: Response) => {
             res.send("Main!!!");
-            //res.render("partials/principal");
         });
 
-        // this.router.get('/signin',(req:Request,res:Response)=> {
-        //     res.send('Sign In!!!');
-        //     //res.render("partials/principal");
-        // });
 
         this.router.get("/signin", userController.signin);
         this.router.post("/signin", userController.login);

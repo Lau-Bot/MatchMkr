@@ -194,11 +194,11 @@ class UserController {
     creatematch(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const match = req.body;
-            console.log("aca");
             console.log(req.body);
             const idOwner = req.session.userkey;
             yield userModel_1.default.creatematch(match, idOwner);
-            res.render("partials/creacionOk");
+            //lo mando a carrito temporalmente para que no rompa
+            res.render("partials/carrito");
         });
     }
 }

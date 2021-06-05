@@ -23,12 +23,16 @@ body {
     <input type="text" name="nombrePartido" placeholder="Nombre del partido..." value="" class="form-control"
                             minlength="3"required
                             maxlength="20" required
-                            pattern="[A-Za-z0-9]+" required
-                            title="Letras y números. Tamaño mínimo: 3. Tamaño máximo: 20"
+                            pattern="[A-Za-z0-9\s]+" required
+                            title="Solo letras, números y espacios. Tamaño mínimo: 3. Tamaño máximo: 20"
                             autofocus>
     <br>
 
-    <input type="text" name="direccion" placeholder="Direccion del partido" value="" class="form-control">
+    <input type="text" name="direccion" placeholder="Direccion del partido" value="" class="form-control" 
+                            minlength="3"required
+                            maxlength="20" required
+                            pattern="[A-Za-z0-9\s]+" required
+                            title="Solo letras, números y espacios. Tamaño mínimo: 3. Tamaño máximo: 20">
     <br>
 
     <input type="datetime-local" name="fechaHasta" placeholder="Fecha y hora fin" value="" class="form-control">

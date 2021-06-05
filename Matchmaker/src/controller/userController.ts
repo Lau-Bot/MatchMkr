@@ -201,11 +201,11 @@ class UserController {
 
     public async creatematch(req: Request, res: Response) {
         const match = req.body;
-        console.log("aca");
         console.log(req.body);
         const idOwner = req.session.userkey;
         await userModel.creatematch(match, idOwner);
-        res.render("partials/creacionOk");
+        //lo mando a carrito temporalmente para que no rompa
+        res.render("partials/carrito");
     }
 }
 const userController = new UserController();
