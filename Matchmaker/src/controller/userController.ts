@@ -220,7 +220,26 @@ class UserController {
         const partidos = await userModel.listarPartidosActivos();
         return res.render("partials/home", {partidos: partidos,mi_session:true});
     }
+
+    public async listarPartidosCreados(req: Request, res: Response){
+        if (!req.session.auth){
+            req.flash(
+                "error_session",
+                "Debes iniciar sesion para crear un partido"
+            );
+            res.redirect("./error");
+            //res.redirect("/");
+        }
+        const match = req.body
+        const idOwner = req.body.idUsuarioOwner;
+        console.log(req.body);
+        console.log("este es el id owner: ",idOwner)
+        const partidos = await userModel.listarPartidosCreados(idOwner);
+        return res.render("partials/home", {partidos: partidos,mi_session:true});
+    }
 }
+
+
 
 
 const userController = new UserController();

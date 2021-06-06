@@ -1,5 +1,5 @@
 <h1>Sitio en construcción</h1>
-<h2>PARTIDOS</h2>
+<h2>Aca tendrías que ver el partido creado recien</h2>
 <html lang="en">
     <style>
 body {
@@ -9,56 +9,44 @@ body {
   background-size: cover;
 }
 </style>
+
 <table border="1" margin="10%" background-color="#FFFFFF">
     <div class="col-15">
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
                 <thead class="thead-dark">
                     <tr>
-                        <th scope="col">Artículo</th>
-                        <th scope="col">Descripción</th>
-                        <th scope="col">Precio</th>
-                        <th scope="col">Cantidad</th>
-                        <th scope="col">Subtotal</th>
+                        <th scope="col">Partido</th>
+                        <th scope="col">Hora fin</th>
+                        <th scope="col">Direccion</th>
+                        <th scope="col">Jugadores faltantes</th>
                     </tr>
-
                 </thead>
                 <tbody>
-                    {{#each carrito}}
+                    {{#each partidoCreado}}
                     <tr>
-                        <th>{{id}}</th>
-                        <th>{{nombre}}</th>
-                        <th>{{precio}}</th>
-                        <th>{{cantidad}}</th>
-                        <th>$ {{subtotal}}</th>
+                        <th>{{nombrePartido}}</th>
+                        <th>{{fechaHasta}}</th>
+                        <th>{{direccion}}</th>
+                        <th>{{jugadoresFaltantes}}</th>
                     </tr>
                     {{else}}
                     <tr>
-                        <td colspan="5">Tu carrito está vacío!!</td>
-
+                        <td colspan="5">No hay partidos</td>
                     </tr>
-
                     {{/each}}
-                    <tr>
-                        <td colspan="4">Total:</td>
-                        <td> $ {{total}}</td>
-                    </tr>
                 </tbody>
-
-
             </table>
-
-
+        </div>
+    </div>
 </table>
 
 </div>
 </div>
 </br>
-
-
 </br>
-
 <br>
+
 <h3>DIRECCION DE ENTREGA</h3>
 <form method="post" action="./confirmar">
     <input type="text" name="calle" placeholder="Calle" required>

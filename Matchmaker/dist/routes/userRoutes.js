@@ -24,12 +24,14 @@ class UserRoutes {
         this.router.get('/home', userController_1.default.listarPartidosActivos);
         this.router.post("/home", userController_1.default.process);
         //CRUD
-        this.router.get("/list", userController_1.default.list);
-        this.router.get("/find/:id", userController_1.default.find);
-        this.router.post("/add", userController_1.default.addUser);
-        this.router.put("/update/:id", userController_1.default.update);
-        this.router.delete("/delete/:id", userController_1.default.delete);
-        this.router.get("/delete/:id", userController_1.default.delete);
+        {
+            this.router.get("/list", userController_1.default.list);
+            this.router.get("/find/:id", userController_1.default.find);
+            this.router.post("/add", userController_1.default.addUser);
+            this.router.put("/update/:id", userController_1.default.update);
+            this.router.delete("/delete/:id", userController_1.default.delete);
+            this.router.get("/delete/:id", userController_1.default.delete);
+        }
         //FIN CRUD
         this.router.get("/controls", userController_1.default.control);
         this.router.post("/procesar", userController_1.default.procesar);
@@ -38,6 +40,7 @@ class UserRoutes {
         this.router.get("/error", userController_1.default.showError);
         this.router.get("/crearpartido", userController_1.default.showcreatematchpage);
         this.router.post("/crearpartido", userController_1.default.creatematch);
+        this.router.get('/carrito', userController_1.default.listarPartidosCreados);
     }
 }
 //Exportamos el enrutador con

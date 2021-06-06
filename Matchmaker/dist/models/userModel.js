@@ -28,8 +28,14 @@ class UserModel {
     }
     listarPartidosActivos() {
         return __awaiter(this, void 0, void 0, function* () {
-            const partidos = yield this.db.query('SELECT * FROM partido where idEstadoPartido=1 and fechaHasta <now() and jugadoresFaltantes>0 and idEstadoPartido=1');
+            const partidos = yield this.db.query('SELECT * FROM partido where idEstadoPartido=1 and fechaHasta >now() and jugadoresFaltantes>0 and idEstadoPartido=1');
             return partidos[0];
+        });
+    }
+    listarPartidosCreados(idUsuarioOwner) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const partidoCreado = yield this.db.query('SELECT * FROM partido where idEstadoPartido=1 and idUsuarioOwner = ?', [idUsuarioOwner]);
+            return partidoCreado[0];
         });
     }
     listar() {

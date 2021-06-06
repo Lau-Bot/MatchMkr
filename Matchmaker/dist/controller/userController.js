@@ -212,6 +212,21 @@ class UserController {
             return res.render("partials/home", { partidos: partidos, mi_session: true });
         });
     }
+    listarPartidosCreados(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!req.session.auth) {
+                req.flash("error_session", "Debes iniciar sesion para crear un partido");
+                res.redirect("./error");
+                //res.redirect("/");
+            }
+            const match = req.body;
+            const idOwner = req.body.idUsuarioOwner;
+            console.log(req.body);
+            console.log("este es el id owner: ", idOwner);
+            const partidos = yield userModel_1.default.listarPartidosCreados(idOwner);
+            return res.render("partials/home", { partidos: partidos, mi_session: true });
+        });
+    }
 }
 const userController = new UserController();
 exports.default = userController;
