@@ -11,7 +11,6 @@ class UserRoutes {
             res.send("Main!!!");
         });
 
-
         this.router.get("/signin", userController.signin);
         this.router.post("/signin", userController.login);
 
@@ -20,7 +19,8 @@ class UserRoutes {
         this.router.post("/signup", userController.addUser);
 
         //Home del usuario
-        this.router.get("/home", userController.home);
+        //this.router.get("/home", userController.home);
+        this.router.get('/home',userController.listarPartidosActivos);
         this.router.post("/home", userController.process);
 
         //CRUD
@@ -42,6 +42,8 @@ class UserRoutes {
 
         this.router.get("/crearpartido", userController.showcreatematchpage);
         this.router.post("/crearpartido", userController.creatematch);
+
+
     }
 }
 

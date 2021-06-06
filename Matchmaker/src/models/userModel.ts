@@ -24,6 +24,11 @@ class UserModel {
         });
     }
 
+    async listarPartidosActivos() {
+        const partidos=await this.db.query('SELECT * FROM partido where idEstadoPartido=1 and fechaHasta <now() and jugadoresFaltantes>0 and idEstadoPartido=1');
+        return partidos[0];
+    }
+
     async listar() {
         //Devuelve todas las filas de la tabla usuario
         //const db=this.connection;
@@ -117,7 +122,7 @@ class UserModel {
     }
 }
 
-// //Exportamos el enrutador con
+//Exportamos el enrutador con
 
 const userModel: UserModel = new UserModel();
 export default userModel;

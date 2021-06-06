@@ -201,6 +201,17 @@ class UserController {
             res.render("partials/carrito");
         });
     }
+    listarPartidosActivos(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!req.session.auth) {
+                req.flash("error_session", "Debes iniciar sesion para crear un partido");
+                res.redirect("./error");
+                //res.redirect("/");
+            }
+            const partidos = yield userModel_1.default.listarPartidosActivos();
+            return res.render("partials/home", { partidos: partidos, mi_session: true });
+        });
+    }
 }
 const userController = new UserController();
 exports.default = userController;

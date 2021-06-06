@@ -1,11 +1,20 @@
 <h1>Sitio en construcción</h1>
 <h2>Pantalla de usuario</h2>
 
-<html lang="en">
+<html lang="es">
     <style>
+       input:valid,
+textarea:valid {
+    background: rgb(106, 255, 106);
+}
+
+input:invalid,
+textarea:invalid {
+    background: rgb(255, 96, 96);
+}   
 body {
   background-image: url('https://vivo247.com/wp-content/uploads/2020/08/futbol5-25082020.jpg');
-  background-repeat: no-repeat;
+    background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
 }
@@ -24,7 +33,7 @@ body {
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each partido}}
+                    {{#each partidos}}
                     <tr>
                         <th>{{nombrePartido}}</th>
                         <th>{{fechaHasta}}</th>
@@ -34,16 +43,10 @@ body {
                     {{else}}
                     <tr>
                         <td colspan="5">No hay partidos</td>
-
                     </tr>
-
                     {{/each}}
-
                 </tbody>
-
-
             </table>
-
     </div>
 </div>
 </table>

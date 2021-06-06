@@ -26,6 +26,12 @@ class UserModel {
             });
         });
     }
+    listarPartidosActivos() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const partidos = yield this.db.query('SELECT * FROM partido where idEstadoPartido=1 and fechaHasta <now() and jugadoresFaltantes>0 and idEstadoPartido=1');
+            return partidos[0];
+        });
+    }
     listar() {
         return __awaiter(this, void 0, void 0, function* () {
             //Devuelve todas las filas de la tabla usuario
@@ -111,7 +117,7 @@ class UserModel {
         });
     }
 }
-// //Exportamos el enrutador con
+//Exportamos el enrutador con
 const userModel = new UserModel();
 exports.default = userModel;
 //# sourceMappingURL=userModel.js.map

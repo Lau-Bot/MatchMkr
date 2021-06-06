@@ -17,11 +17,11 @@ class AdminModel {
     config() {
         return __awaiter(this, void 0, void 0, function* () {
             this.db = yield promise_1.createPool({
-                host: 'localhost',
-                user: 'root',
-                password: '',
-                database: 'pedidost2',
-                connectionLimit: 10
+                host: "us-cdbr-east-03.cleardb.com",
+                user: "b7231483ee9d9a",
+                password: "9d11f609",
+                database: "heroku_3eb19d65a2b4b11",
+                connectionLimit: 10,
             });
         });
     }

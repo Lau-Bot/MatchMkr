@@ -207,6 +207,21 @@ class UserController {
         //lo mando a carrito temporalmente para que no rompa
         res.render("partials/carrito");
     }
+
+    public async listarPartidosActivos(req: Request, res: Response){
+        if (!req.session.auth){
+            req.flash(
+                "error_session",
+                "Debes iniciar sesion para crear un partido"
+            );
+            res.redirect("./error");
+            //res.redirect("/");
+        }
+        const partidos = await userModel.listarPartidosActivos();
+        return res.render("partials/home", {partidos: partidos,mi_session:true});
+    }
 }
+
+
 const userController = new UserController();
 export default userController;

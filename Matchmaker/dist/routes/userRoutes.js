@@ -20,7 +20,8 @@ class UserRoutes {
         this.router.get("/signup", userController_1.default.signup);
         this.router.post("/signup", userController_1.default.addUser);
         //Home del usuario
-        this.router.get("/home", userController_1.default.home);
+        //this.router.get("/home", userController.home);
+        this.router.get('/home', userController_1.default.listarPartidosActivos);
         this.router.post("/home", userController_1.default.process);
         //CRUD
         this.router.get("/list", userController_1.default.list);
