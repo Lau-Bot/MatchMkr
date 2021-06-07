@@ -25,11 +25,16 @@ class UserModel {
     }
 
     async listarPartidosActivos() {
-        const partidos=await this.db.query('SELECT * FROM partido where idEstadoPartido=1 and fechaHasta >now() and jugadoresFaltantes>0 and idEstadoPartido=1');
+        const partidos = await this.db.query(
+            "SELECT * FROM partido where idEstadoPartido=1 and fechaHasta >now() and jugadoresFaltantes>0 and idEstadoPartido=1"
+        );
         return partidos[0];
     }
     async listarPartidosCreados(idUsuarioOwner: number) {
-        const partidoCreado=await this.db.query('SELECT * FROM partido where idEstadoPartido=1 and idUsuarioOwner = ?',[idUsuarioOwner]);
+        const partidoCreado = await this.db.query(
+            "SELECT * FROM partido where idEstadoPartido=1 and idUsuarioOwner = ?",
+            [idUsuarioOwner]
+        );
         return partidoCreado[0];
     }
 
@@ -45,7 +50,10 @@ class UserModel {
     //Devuelve un objeto cuya fila en la tabla usuarios coincide con id.
     //Si no la encuentra devuelve null
     async buscarId(id: string) {
-        const encontrado: any = await this.db.query("SELECT * FROM usuario WHERE id = ?",[id]);
+        const encontrado: any = await this.db.query(
+            "SELECT * FROM usuario WHERE id = ?",
+            [id]
+        );
         //Ojo la consulta devuelve una tabla de una fila. (Array de array) Hay que desempaquetar y obtener la unica fila al enviar
         if (encontrado.length > 1) return encontrado[0][0];
         return null;
@@ -119,6 +127,16 @@ class UserModel {
             )
         )[0].affectedRows;
         console.log(result);
+        return result;
+    }
+
+    async showmatchinfo(id: string) {
+        console.log(id);
+        const partido = await this.db.query(
+            "SELECT * FROM matchinfo WHERE id = ?",
+            [id]
+        );
+        const result = partido[0][0];
         return result;
     }
 }

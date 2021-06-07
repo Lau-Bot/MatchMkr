@@ -26,6 +26,7 @@ body {
             <table class="table table-bordered table-hover">
                 <thead class="thead-dark">
                     <tr>
+                        <th scope="col"></th>
                         <th scope="col">Partido</th>
                         <th scope="col">Hora fin</th>
                         <th scope="col">Direccion</th>
@@ -34,16 +35,19 @@ body {
                 </thead>
                 <tbody>
                     {{#each partidos}}
-                    <tr>
-                        <th>{{nombrePartido}}</th>
-                        <th>{{fechaHasta}}</th>
-                        <th>{{direccion}}</th>
-                        <th>{{jugadoresFaltantes}}</th>
-                    </tr>
-                    {{else}}
-                    <tr>
-                        <td colspan="5">No hay partidos</td>
-                    </tr>
+                    
+                        <tr>
+                            <th> <a class="btn btn-success btn-lg" href="/user/matchinfo/{{id}}">Unirse</a></th>
+                            <th>{{nombrePartido}}</th>
+                            <th>{{fechaHasta}}</th>
+                            <th>{{direccion}}</th>
+                            <th>{{jugadoresFaltantes}}</th>
+                        </tr>
+                        {{else}}
+                        <tr>
+                            <td colspan="5">No hay partidos</td>
+                        </tr>
+                    
                     {{/each}}
                 </tbody>
             </table>

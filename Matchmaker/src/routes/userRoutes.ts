@@ -20,18 +20,18 @@ class UserRoutes {
 
         //Home del usuario
         //this.router.get("/home", userController.home);
-        this.router.get('/home',userController.listarPartidosActivos);
+        this.router.get("/home", userController.listarPartidosActivos);
         this.router.post("/home", userController.process);
 
         //CRUD
         {
-        this.router.get("/list", userController.list);
-        this.router.get("/find/:id", userController.find);
-        this.router.post("/add", userController.addUser);
-        this.router.put("/update/:id", userController.update);
-        this.router.delete("/delete/:id", userController.delete);
-        this.router.get("/delete/:id", userController.delete);
-    }
+            this.router.get("/list", userController.list);
+            this.router.get("/find/:id", userController.find);
+            this.router.post("/add", userController.addUser);
+            this.router.put("/update/:id", userController.update);
+            this.router.delete("/delete/:id", userController.delete);
+            this.router.get("/delete/:id", userController.delete);
+        }
         //FIN CRUD
 
         this.router.get("/controls", userController.control);
@@ -45,8 +45,8 @@ class UserRoutes {
         this.router.get("/crearpartido", userController.showcreatematchpage);
         this.router.post("/crearpartido", userController.creatematch);
 
-        this.router.get('/carrito',userController.listarPartidosCreados);
-
+        this.router.get("/carrito", userController.listarPartidosCreados);
+        this.router.get("/matchinfo/:id", userController.showmatchinfo);
     }
 }
 

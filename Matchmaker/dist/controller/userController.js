@@ -201,6 +201,22 @@ class UserController {
             res.render("partials/carrito");
         });
     }
+    showmatchinfo(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!req.session.auth) {
+                req.flash("error_session", "Debes iniciar sesion para crear un partido");
+                res.redirect("./error");
+                //res.redirect("/");
+            }
+            console.log(req.params.id);
+            const { id } = req.params;
+            const matchinfo = yield userModel_1.default.showmatchinfo(id);
+            console.log(matchinfo);
+            res.render("partials/matchinfo", {
+                matchinfo: matchinfo,
+            });
+        });
+    }
     listarPartidosActivos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             if (!req.session.auth) {
@@ -209,7 +225,10 @@ class UserController {
                 //res.redirect("/");
             }
             const partidos = yield userModel_1.default.listarPartidosActivos();
-            return res.render("partials/home", { partidos: partidos, mi_session: true });
+            return res.render("partials/home", {
+                partidos: partidos,
+                mi_session: true,
+            });
         });
     }
     listarPartidosCreados(req, res) {
@@ -224,7 +243,10 @@ class UserController {
             console.log(req.body);
             console.log("este es el id owner: ", idOwner);
             const partidos = yield userModel_1.default.listarPartidosCreados(idOwner);
-            return res.render("partials/home", { partidos: partidos, mi_session: true });
+            return res.render("partials/home", {
+                partidos: partidos,
+                mi_session: true,
+            });
         });
     }
 }

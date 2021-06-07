@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import userModel from "../models/userModel";
 import flash from "connect-flash";
 
-
 class UserController {
     public signin(req: Request, res: Response) {
         console.log(req.body);
@@ -51,7 +50,6 @@ class UserController {
         console.log(req.body);
         //res.send('Sign Up!!!');
         res.render("partials/signupForm");
-
     }
 
     public home(req: Request, res: Response) {
@@ -103,10 +101,8 @@ class UserController {
             const result = await userModel.crear(usuario);
             //res.redirect("./principal");
             return res.json({ message: "Usuario guardado" });
-
         }
         return res.json({ message: "Nombre de usuario o email en uso" });
-
     }
 
     public async update(req: Request, res: Response) {
@@ -208,8 +204,26 @@ class UserController {
         res.render("partials/carrito");
     }
 
-    public async listarPartidosActivos(req: Request, res: Response){
-        if (!req.session.auth){
+    public async showmatchinfo(req: Request, res: Response) {
+        if (!req.session.auth) {
+            req.flash(
+                "error_session",
+                "Debes iniciar sesion para crear un partido"
+            );
+            res.redirect("./error");
+            //res.redirect("/");
+        }
+        console.log(req.params.id);
+        const { id } = req.params;
+        const matchinfo = await userModel.showmatchinfo(id);
+        console.log(matchinfo);
+        res.render("partials/matchinfo", {
+            matchinfo: matchinfo,
+        });
+    }
+
+    public async listarPartidosActivos(req: Request, res: Response) {
+        if (!req.session.auth) {
             req.flash(
                 "error_session",
                 "Debes iniciar sesion para crear un partido"
@@ -218,11 +232,14 @@ class UserController {
             //res.redirect("/");
         }
         const partidos = await userModel.listarPartidosActivos();
-        return res.render("partials/home", {partidos: partidos,mi_session:true});
+        return res.render("partials/home", {
+            partidos: partidos,
+            mi_session: true,
+        });
     }
 
-    public async listarPartidosCreados(req: Request, res: Response){
-        if (!req.session.auth){
+    public async listarPartidosCreados(req: Request, res: Response) {
+        if (!req.session.auth) {
             req.flash(
                 "error_session",
                 "Debes iniciar sesion para crear un partido"
@@ -230,17 +247,17 @@ class UserController {
             res.redirect("./error");
             //res.redirect("/");
         }
-        const match = req.body
+        const match = req.body;
         const idOwner = req.body.idUsuarioOwner;
         console.log(req.body);
-        console.log("este es el id owner: ",idOwner)
+        console.log("este es el id owner: ", idOwner);
         const partidos = await userModel.listarPartidosCreados(idOwner);
-        return res.render("partials/home", {partidos: partidos,mi_session:true});
+        return res.render("partials/home", {
+            partidos: partidos,
+            mi_session: true,
+        });
     }
 }
-
-
-
 
 const userController = new UserController();
 export default userController;

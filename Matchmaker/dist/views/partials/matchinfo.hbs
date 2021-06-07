@@ -1,0 +1,34 @@
+<table border="1" margin="10%" background-color="#FFFFFF">
+    <div class="col-15">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Dueño de sala</th>
+                        <th scope="col">Partido</th>
+                        <th scope="col">Hora fin</th>
+                        <th scope="col">Direccion</th>
+                        <th scope="col">Jugadores faltantes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#if matchinfo}}
+                        <tr>
+                            <th>{{matchinfo.creador}}</th>
+                            <th>{{matchinfo.nombrePartido}}</th>
+                            <th>{{matchinfo.fechaHasta}}</th>
+                            <th>{{matchinfo.direccion}}</th>
+                            <th>{{matchinfo.jugadoresFaltantes}}</th>
+                        </tr>
+                    {{else}}
+                        <tr>
+                            <td colspan="5">No hay partidos</td>
+                        </tr>
+                    {{/if}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</table>
+
+<a class="btn btn-danger" href="../home">Volver</a>

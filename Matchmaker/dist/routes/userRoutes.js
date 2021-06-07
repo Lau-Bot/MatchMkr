@@ -21,7 +21,7 @@ class UserRoutes {
         this.router.post("/signup", userController_1.default.addUser);
         //Home del usuario
         //this.router.get("/home", userController.home);
-        this.router.get('/home', userController_1.default.listarPartidosActivos);
+        this.router.get("/home", userController_1.default.listarPartidosActivos);
         this.router.post("/home", userController_1.default.process);
         //CRUD
         {
@@ -40,7 +40,8 @@ class UserRoutes {
         this.router.get("/error", userController_1.default.showError);
         this.router.get("/crearpartido", userController_1.default.showcreatematchpage);
         this.router.post("/crearpartido", userController_1.default.creatematch);
-        this.router.get('/carrito', userController_1.default.listarPartidosCreados);
+        this.router.get("/carrito", userController_1.default.listarPartidosCreados);
+        this.router.get("/matchinfo/:id", userController_1.default.showmatchinfo);
     }
 }
 //Exportamos el enrutador con

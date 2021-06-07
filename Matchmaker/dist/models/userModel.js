@@ -28,13 +28,13 @@ class UserModel {
     }
     listarPartidosActivos() {
         return __awaiter(this, void 0, void 0, function* () {
-            const partidos = yield this.db.query('SELECT * FROM partido where idEstadoPartido=1 and fechaHasta >now() and jugadoresFaltantes>0 and idEstadoPartido=1');
+            const partidos = yield this.db.query("SELECT * FROM partido where idEstadoPartido=1 and fechaHasta >now() and jugadoresFaltantes>0 and idEstadoPartido=1");
             return partidos[0];
         });
     }
     listarPartidosCreados(idUsuarioOwner) {
         return __awaiter(this, void 0, void 0, function* () {
-            const partidoCreado = yield this.db.query('SELECT * FROM partido where idEstadoPartido=1 and idUsuarioOwner = ?', [idUsuarioOwner]);
+            const partidoCreado = yield this.db.query("SELECT * FROM partido where idEstadoPartido=1 and idUsuarioOwner = ?", [idUsuarioOwner]);
             return partidoCreado[0];
         });
     }
@@ -119,6 +119,14 @@ class UserModel {
                 match.jugadoresFaltantes,
             ]))[0].affectedRows;
             console.log(result);
+            return result;
+        });
+    }
+    showmatchinfo(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(id);
+            const partido = yield this.db.query("SELECT * FROM matchinfo WHERE id = ?", [id]);
+            const result = partido[0][0];
             return result;
         });
     }
