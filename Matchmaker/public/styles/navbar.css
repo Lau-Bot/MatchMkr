@@ -1,0 +1,62 @@
+.topbar {
+    display: flex;
+    flex-direction: row;
+    height: 80px;
+}
+
+.topbar_left {
+    display: flex;
+    padding-left: 30px;
+    align-items: center;
+    width: 50%;
+}
+
+.topbar_right {
+    width: 50%;
+}
+.computer,
+.mobile {
+    color: white;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding-right: 30px;
+    flex-direction: row-reverse;
+    width: 100%;
+    height: 100%;
+}
+
+.topbar_left img.matchmaker_icon {
+    width: 150px;
+}
+
+.topbar_right .menu_button {
+    height: 50px;
+    width: 50px;
+    padding: 10px;
+    background-color: transparent;
+    border: none;
+}
+
+.topbar_right .menu_button img {
+    fill: red;
+}
+
+@media only screen and (max-width: 830px) {
+    .topbar_right .computer {
+        display: none;
+    }
+
+    .topbar_right .mobile {
+        display: flex;
+    }
+}
+
+@media only screen and (min-width: 830px) {
+    .topbar_right .mobile {
+        display: none;
+    }
+    .topbar_right .computer {
+        display: flex;
+    }
+}

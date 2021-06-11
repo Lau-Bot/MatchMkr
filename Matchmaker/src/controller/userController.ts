@@ -2,6 +2,18 @@ import { Request, Response } from "express";
 import userModel from "../models/userModel";
 import flash from "connect-flash";
 
+interface partidoInterface {
+    id: number;
+    nombrePartido: string;
+    idUsuarioOwner: number;
+    fechaDesde: Date;
+    fechaHasta: any | Date;
+    idEstadoPartido: number;
+    direccion: string;
+    idDeporte: number;
+    jugadoresFaltantes: number;
+}
+
 class UserController {
     public signin(req: Request, res: Response) {
         console.log(req.body);
@@ -232,8 +244,31 @@ class UserController {
             //res.redirect("/");
         }
         const partidos = await userModel.listarPartidosActivos();
+        console.log("PARTIDOS!!!!!!! ", partidos);
+
+        const partidosFinal = partidos.map((partido: partidoInterface) => {
+            partido.fechaHasta = `
+            ${
+                partido.fechaHasta.getMonth() <= 9
+                    ? "0" + partido.fechaHasta.getMonth()
+                    : partido.fechaHasta.getMonth()
+            }/${
+                partido.fechaHasta.getDate() <= 9
+                    ? "0" + partido.fechaHasta.getDate()
+                    : partido.fechaHasta.getDate()
+            }/${partido.fechaHasta.getFullYear()} - ${
+                partido.fechaHasta.getHours() <= 9
+                    ? "0" + partido.fechaHasta.getHours()
+                    : partido.fechaHasta.getHours()
+            }:${
+                partido.fechaHasta.getMinutes() <= 9
+                    ? "0" + partido.fechaHasta.getMinutes()
+                    : partido.fechaHasta.getMinutes()
+            }hs`;
+            return partido;
+        });
         return res.render("partials/home", {
-            partidos: partidos,
+            partidos: partidosFinal,
             mi_session: true,
         });
     }

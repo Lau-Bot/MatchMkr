@@ -1,8 +1,10 @@
-<h1>Sitio en construcción</h1>
-<h2>Pantalla de usuario</h2>
+
 
 <html lang="es">
+    <link rel="stylesheet" href="/public/styles/cards.css">
     <style>
+        
+
        input:valid,
 textarea:valid {
     background: rgb(106, 255, 106);
@@ -13,47 +15,43 @@ textarea:invalid {
     background: rgb(255, 96, 96);
 }   
 body {
-  background-image: url('https://vivo247.com/wp-content/uploads/2020/08/futbol5-25082020.jpg');
+  /*background-image: url('https://vivo247.com/wp-content/uploads/2020/08/futbol5-25082020.jpg');*/
     background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
 }
 </style>
 
-<table border="1" margin="10%" background-color="#FFFFFF">
-    <div class="col-15">
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Partido</th>
-                        <th scope="col">Hora fin</th>
-                        <th scope="col">Direccion</th>
-                        <th scope="col">Jugadores faltantes</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{#each partidos}}
+<div class="cards_container">
+     {{#each partidos}}
+            <form class="card">
+                <div>
+                    <span class="text_match_address"
+                        >Calle {{direccion}}</span
+                    >
+                </div>
+                <div class="card_mid">
+                    <img
+                        class="image_match"
+                        src="https://i.pinimg.com/originals/e1/f9/71/e1f971be3616f050bb4061ddbb336dc8.jpg"
+                        alt=""
+                    />
+                    <span class="text_match_name">{{nombrePartido}}</span>
+                    <div class="inner_info_match">
+                        <span class="text_owner_name">Mauricio Brynkier</span>
+                        <span class="text_match_date">{{fechaHasta}}</span>
                     
-                        <tr>
-                            <th> <a class="btn btn-success btn-lg" href="/user/matchinfo/{{id}}">Unirse</a></th>
-                            <th>{{nombrePartido}}</th>
-                            <th>{{fechaHasta}}</th>
-                            <th>{{direccion}}</th>
-                            <th>{{jugadoresFaltantes}}</th>
-                        </tr>
-                        {{else}}
-                        <tr>
-                            <td colspan="5">No hay partidos</td>
-                        </tr>
-                    
-                    {{/each}}
-                </tbody>
-            </table>
+                        <span class="text_match_time">Jugadores Faltantes: {{jugadoresFaltantes}}</span>
+                    </div>
+                </div>
+                <div>
+                    <input class="btn_join" type="submit" value="UNIRSE" />
+                </div>
+            </form>
+            {{/each}}
         </div>
-    </div>
-</table>
+
+
 
 <div style="text-align: center;">
     <a class="btn btn-success btn-lg" href="/user/crearpartido" >Crear partido</a><br>

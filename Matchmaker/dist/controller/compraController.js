@@ -15,19 +15,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const compraModel_1 = __importDefault(require("../models/compraModel"));
 class CompraController {
     listar(req, res) {
-        res.render("partials/carrito", { carrito: req.session.carrito, total: req.session.total });
+        res.render("partials/carrito", {
+            carrito: req.session.carrito,
+            total: req.session.total,
+        });
     }
     verCarrito(req, res) {
         if (!req.session.auth) {
-            req.flash('error', 'Debe iniciar sesion para ver esta seccion');
+            req.flash("error", "Debe iniciar sesion para ver esta seccion");
             res.redirect("../user/signin");
             return res.redirect("/");
         }
         if (req.session.total == 0) {
-            res.render("partials/carrito", { carrito: req.session.carrito, total: req.session.total });
+            res.render("partials/carrito", {
+                carrito: req.session.carrito,
+                total: req.session.total,
+            });
         }
         else {
-            res.render("partials/carrito", { carrito: req.session.carrito, total: req.session.total, flag: true });
+            res.render("partials/carrito", {
+                carrito: req.session.carrito,
+                total: req.session.total,
+                flag: true,
+            });
         }
     }
     confirmar(req, res) {
@@ -40,18 +50,21 @@ class CompraController {
             const id = yield compraModel_1.default.GuardarDatos(req.body); //toma pedido y lo guarda en la bd
             for (const i in req.session.carrito) {
                 pedido_articulo.push({
-                    "id_pedido": id,
-                    "id_articulo": req.session.carrito[i].id,
-                    "precio": req.session.carrito[i].precio,
-                    "cantidad": req.session.carrito[i].cantidad
+                    id_pedido: id,
+                    id_articulo: req.session.carrito[i].id,
+                    precio: req.session.carrito[i].precio,
+                    cantidad: req.session.carrito[i].cantidad,
                 });
                 yield compraModel_1.default.GuardarPedidoArticulo(pedido_articulo[0]);
                 pedido_articulo = [];
             }
-            ;
             req.session.carrito = [];
             req.session.total = 0;
-            res.render('partials/pedidoOk', { pedido: id, compra: req.body, mi_session: true });
+            res.render("partials/pedidoOk", {
+                pedido: id,
+                compra: req.body,
+                mi_session: true,
+            });
         });
     }
 }

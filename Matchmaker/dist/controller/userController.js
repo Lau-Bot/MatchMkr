@@ -225,8 +225,22 @@ class UserController {
                 //res.redirect("/");
             }
             const partidos = yield userModel_1.default.listarPartidosActivos();
+            console.log("PARTIDOS!!!!!!! ", partidos);
+            const partidosFinal = partidos.map((partido) => {
+                partido.fechaHasta = `
+            ${partido.fechaHasta.getMonth() <= 9
+                    ? "0" + partido.fechaHasta.getMonth()
+                    : partido.fechaHasta.getMonth()}/${partido.fechaHasta.getDate() <= 9
+                    ? "0" + partido.fechaHasta.getDate()
+                    : partido.fechaHasta.getDate()}/${partido.fechaHasta.getFullYear()} - ${partido.fechaHasta.getHours() <= 9
+                    ? "0" + partido.fechaHasta.getHours()
+                    : partido.fechaHasta.getHours()}:${partido.fechaHasta.getMinutes() <= 9
+                    ? "0" + partido.fechaHasta.getMinutes()
+                    : partido.fechaHasta.getMinutes()}hs`;
+                return partido;
+            });
             return res.render("partials/home", {
-                partidos: partidos,
+                partidos: partidosFinal,
                 mi_session: true,
             });
         });
