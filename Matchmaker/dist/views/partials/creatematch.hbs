@@ -1,35 +1,45 @@
-<h1>Sitio en construcción</h1>
-<h2>creación partido</h2>
-<html lang="es">
-    <style>
-       input:valid,
-    textarea:valid {
-    background: rgb(106, 255, 106);
-}
+<link rel="stylesheet" href="/public/styles/floating_card.css" />
 
-input:invalid,
-textarea:invalid {
-    background: rgb(255, 96, 96);
-}   
-body {
-  /*background-image: url('https://vivo247.com/wp-content/uploads/2020/08/futbol5-25082020.jpg');*/
-    background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-}
-</style>
-<form action="./crearpartido/{{id}}" method="post" class="form-group">
-    <input type="text" name="nombrePartido" placeholder="Nombre del partido..." value="" class="form-control" minlength="3"required pattern="[A-Za-z0-9\s]+" required title="Solo letras, números y espacios. Tamaño mínimo: 3. Tamaño máximo: 20" autofocus>
-    <br>
-    <input type="text" name="direccion" placeholder="Direccion del partido" value="" class="form-control" minlength="3"required maxlength="20" required pattern="[A-Za-z0-9\s]+" required title="Solo letras, números y espacios. Tamaño mínimo: 3. Tamaño máximo: 20">
-    <br>
-    <input type="datetime-local" name="fechaHasta" placeholder="Fecha y hora fin" value="" class="form-control">
-    <br>
-    <input type="number" name="jugadoresFaltantes" placeholder="Jugadores faltantes" value="" class="form-control">
-    <br>
-    <br>
-    <div style="text-align: center;">
-        <button class="btn btn-primary" type="submit">Crear partido</button>
-        <a class="btn btn-info" href="../user/home">Volver</a>
-    </div>   
-</form>
+<div id="container">
+    <form id="floating_card" action="./crearpartido/{{id}}" method="post">
+        <div id="title_container">
+            <h2 id="title">Nuevo Partido</h2>
+        </div>
+        <input
+            class="textbox"
+            type="text"
+            name="nombrePartido"
+            placeholder="Nombre del partido"
+            minlength="3"
+            pattern="[A-Za-z0-9\\\\\\\\\\\\\\\\\s]+"
+            title="Solo letras, números y espacios. Tamaño mínimo: 3. Tamaño máximo: 20"
+            autofocus
+        />
+        <input
+            type="text"
+            name="direccion"
+            placeholder="Dirección del partido"
+            class="textbox"
+            minlength="3"
+            maxlength="20"
+            pattern="[A-Za-z0-9\\\\\\\\\\\\\\\\\s]+"
+        />
+        <input
+            class="textbox"
+            type="datetime-local"
+            name="fechaHasta"
+            placeholder="Fecha y hora fin"
+        />
+        <input
+            class="textbox"
+            type="number"
+            name="jugadoresFaltantes"
+            placeholder="Jugadores faltantes"
+        />
+        <input id="submit_btn" type="submit" value="Crear partido" />
+        <div id="bottom_container">
+            <a href="../user/home">Volver</a>
+        </div>
+
+    </form>
+</div>

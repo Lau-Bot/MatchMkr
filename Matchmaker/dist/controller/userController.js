@@ -50,7 +50,11 @@ class UserController {
     }
     showError(req, res) {
         // res.send({ "Usuario y/o contraseña incorrectos": req.body });
-        res.render("partials/error");
+        res.render("partials/alert", {
+            alert_title: "Error",
+            alert_body: "Debes iniciar sesion para crear un partido",
+            gologin: true,
+        });
     }
     //registro
     signup(req, res) {
@@ -104,10 +108,19 @@ class UserController {
             const busquedaMail = yield userModel_1.default.buscarMail(usuario.email);
             if (!busqueda && !busquedaMail) {
                 const result = yield userModel_1.default.crear(usuario);
-                //res.redirect("./principal");
-                return res.json({ message: "Usuario guardado" });
+                return res.render("partials/alert", {
+                    alert_title: "Usuario guardado",
+                    alert_body: "El usuario se ha creado correctamente!",
+                    gologin: true,
+                });
+                //return res.json({ message: "Usuario guardado" })
             }
-            return res.json({ message: "Nombre de usuario o email en uso" });
+            return res.render("partials/alert", {
+                alert_title: "Error",
+                alert_body: "El nombre de usuario o email elegidos ya estan en uso, por favor intente ingresar otro",
+                gosignup: true,
+            });
+            //return res.json({ message: "Nombre de usuario o email en uso" })
         });
     }
     update(req, res) {
@@ -198,7 +211,11 @@ class UserController {
             const idOwner = req.session.userkey;
             yield userModel_1.default.creatematch(match, idOwner);
             //lo mando a carrito temporalmente para que no rompa
-            res.render("partials/carrito");
+            res.render("partials/alert", {
+                alert_title: "Partido Creado",
+                alert_body: "Partido fue creado satisfactoriamente.",
+                gohome: true,
+            });
         });
     }
     showmatchinfo(req, res) {
@@ -257,6 +274,7 @@ class UserController {
             console.log(req.body);
             console.log("este es el id owner: ", idOwner);
             const partidos = yield userModel_1.default.listarPartidosCreados(idOwner);
+            console.log(partidos);
             return res.render("partials/home", {
                 partidos: partidos,
                 mi_session: true,

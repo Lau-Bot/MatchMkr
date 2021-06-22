@@ -42,6 +42,18 @@
     fill: red;
 }
 
+.sesion_btn {
+    color: white !important;
+    text-decoration: none !important;
+    transition: 0.2s !important;
+}
+
+.sesion_btn:hover {
+    color: #dadada !important;
+    font-size: 18px;
+    transition: 0.2s !important;
+}
+
 @media only screen and (max-width: 830px) {
     .topbar_right .computer {
         display: none;

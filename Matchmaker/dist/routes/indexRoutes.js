@@ -7,7 +7,7 @@ class IndexRoutes {
         this.config();
     }
     config() {
-        this.router.get('/', (req, res) => {
+        this.router.get("/", (req, res) => {
             //res.send('Main!!!');
             req.session.auth = false;
             req.session.user = {};
@@ -15,7 +15,7 @@ class IndexRoutes {
         });
     }
 }
-//Exportamos el enrutador con 
+//Exportamos el enrutador con
 const indexRoutes = new IndexRoutes();
 exports.default = indexRoutes.router;
 //# sourceMappingURL=indexRoutes.js.map

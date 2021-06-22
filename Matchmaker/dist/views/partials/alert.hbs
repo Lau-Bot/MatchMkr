@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="/public/styles/alert.css" />
+
+<div id="alert_container">
+    <div id="inner_alert_container">
+        <h2>{{alert_title}}</h2>
+        <p id="alert_body">{{alert_body}}
+        </p>
+    </div>
+    {{#if gologin}}
+        <script>
+            setTimeout(()=>{ window.location.href ="/" },3000);
+        </script>
+    {{/if}}
+
+    {{#if gohome}}
+        <script>
+            setTimeout(()=>{ window.location.href ="/user/home" },3000);
+        </script>
+    {{/if}}
+
+    {{#if gosignup}}
+        <script>
+            setTimeout(()=>{ window.location.href ="/user/signup" },3000);
+        </script>
+    {{/if}}
+</div>

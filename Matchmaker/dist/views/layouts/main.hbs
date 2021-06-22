@@ -48,8 +48,9 @@
             <div class="topbar_right">
                 {{#if mi_session}}
                     <div class="computer">
-                        <a>Salir</a>
-                        <a>Crear Partido</a>
+                        <a class="sesion_btn" href="../user/salir">Salir</a>
+                        <a class="sesion_btn" href="/user/crearpartido">Crear
+                            Partido</a>
                     </div>
                     <div class="mobile">
                         <button class="menu_button">
@@ -62,9 +63,9 @@
         </nav>
 
         {{{body}}}
-        {{#if mi_session}}
+        <!-- {{#if mi_session}}
             <a class="btn btn-danger" href="../user/salir">Salir</a>
-        {{/if}}
+        {{/if}}-->
     </body>
 
 </html>
