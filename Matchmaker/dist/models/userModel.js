@@ -22,13 +22,37 @@ class UserModel {
                 user: "b7231483ee9d9a",
                 password: "9d11f609",
                 database: "heroku_3eb19d65a2b4b11",
-                connectionLimit: 10,
+                connectionLimit: 50,
             });
+        });
+    }
+    listarDeportes() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let sports = yield this.db.query("SELECT * FROM deporte");
+            return sports[0];
+        });
+    }
+    listarUsuariosOwners() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let owner = yield this.db.query("SELECT id,usuario, elo, email FROM usuario");
+            return owner[0];
         });
     }
     listarPartidosActivos() {
         return __awaiter(this, void 0, void 0, function* () {
+            //!      OPTIMIZAR CON UNA VIEW EN DB
+            //!---------------------------------------------
+            const sports = yield this.listarDeportes();
+            const users = yield this.listarUsuariosOwners();
+            //!---------------------------------------------
             const partidos = yield this.db.query("SELECT * FROM partido where idEstadoPartido=1 and fechaHasta >now() and jugadoresFaltantes>0 and idEstadoPartido=1");
+            partidos[0] = partidos[0].map((partido) => {
+                let sport = sports.filter((sport) => sport.id == partido.idDeporte);
+                let owner = users.filter((user) => user.id == partido.idUsuarioOwner);
+                sport = sport[0];
+                owner = owner[0];
+                return Object.assign(Object.assign({}, partido), { ownerInfo: Object.assign({}, owner), sportInfo: Object.assign({}, sport) });
+            });
             return partidos[0];
         });
     }
@@ -115,10 +139,9 @@ class UserModel {
                 match.fechaHasta,
                 1,
                 match.direccion,
-                1,
+                Number(match.selectedSport),
                 match.jugadoresFaltantes,
             ]))[0].affectedRows;
-            console.log(result);
             return result;
         });
     }

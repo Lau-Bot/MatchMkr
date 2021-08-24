@@ -24,6 +24,17 @@
             maxlength="20"
             pattern="[A-Za-z0-9\\\\\\\\\\\\\\\\\s]+"
         />
+        <select 
+           
+            name="selectedSport"
+            class="textbox"
+           
+        />
+        <option value="" selected hidden disabled>Selecciona un deporte</option>
+        {{#each sports}}
+            <option value={{id}}>{{nombre}}</option>
+        {{/each}}
+        </form>
         <input
             class="textbox"
             type="datetime-local"

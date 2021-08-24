@@ -209,7 +209,7 @@ class UserController {
         res.redirect("/")
     }
 
-    public showcreatematchpage(req: Request, res: Response) {
+    public async showcreatematchpage(req: Request, res: Response) {
         if (!req.session.auth) {
             req.flash(
                 "error_session",
@@ -218,8 +218,11 @@ class UserController {
             res.redirect("./error")
             //res.redirect("/");
         }
+
+        const sports = await userModel.listarDeportes()
+
         console.log(req.body)
-        res.render("partials/creatematch")
+        res.render("partials/creatematch", { sports })
     }
 
     public async creatematch(req: Request, res: Response) {
@@ -247,7 +250,7 @@ class UserController {
         console.log(req.params.id)
         const { id } = req.params
         const matchinfo = await userModel.showmatchinfo(id)
-        console.log(matchinfo)
+
         res.render("partials/matchinfo", {
             matchinfo: matchinfo,
         })
@@ -263,7 +266,6 @@ class UserController {
             //res.redirect("/");
         }
         const partidos = await userModel.listarPartidosActivos()
-        console.log("PARTIDOS!!!!!!! ", partidos)
 
         const partidosFinal = partidos.map((partido: partidoInterface) => {
             partido.fechaHasta = `
@@ -286,6 +288,7 @@ class UserController {
             }hs`
             return partido
         })
+        console.log(partidosFinal)
         return res.render("partials/home", {
             partidos: partidosFinal,
             mi_session: true,

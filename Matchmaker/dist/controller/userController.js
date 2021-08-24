@@ -196,13 +196,16 @@ class UserController {
         res.redirect("/");
     }
     showcreatematchpage(req, res) {
-        if (!req.session.auth) {
-            req.flash("error_session", "Debes iniciar sesion para crear un partido");
-            res.redirect("./error");
-            //res.redirect("/");
-        }
-        console.log(req.body);
-        res.render("partials/creatematch");
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!req.session.auth) {
+                req.flash("error_session", "Debes iniciar sesion para crear un partido");
+                res.redirect("./error");
+                //res.redirect("/");
+            }
+            const sports = yield userModel_1.default.listarDeportes();
+            console.log(req.body);
+            res.render("partials/creatematch", { sports });
+        });
     }
     creatematch(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -228,7 +231,6 @@ class UserController {
             console.log(req.params.id);
             const { id } = req.params;
             const matchinfo = yield userModel_1.default.showmatchinfo(id);
-            console.log(matchinfo);
             res.render("partials/matchinfo", {
                 matchinfo: matchinfo,
             });
@@ -242,7 +244,6 @@ class UserController {
                 //res.redirect("/");
             }
             const partidos = yield userModel_1.default.listarPartidosActivos();
-            console.log("PARTIDOS!!!!!!! ", partidos);
             const partidosFinal = partidos.map((partido) => {
                 partido.fechaHasta = `
             ${partido.fechaHasta.getMonth() <= 9
@@ -256,6 +257,7 @@ class UserController {
                     : partido.fechaHasta.getMinutes()}hs`;
                 return partido;
             });
+            console.log(partidosFinal);
             return res.render("partials/home", {
                 partidos: partidosFinal,
                 mi_session: true,
