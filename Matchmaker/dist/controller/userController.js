@@ -231,6 +231,19 @@ class UserController {
             console.log(req.params.id);
             const { id } = req.params;
             const matchinfo = yield userModel_1.default.showmatchinfo(id);
+            matchinfo.fechaHasta = `
+        ${matchinfo.fechaHasta.getDate() <= 9
+                ? "0" + matchinfo.fechaHasta.getDate()
+                : matchinfo.fechaHasta.getDate()}/${matchinfo.fechaHasta.getMonth() <= 9
+                ? "0" + matchinfo.fechaHasta.getMonth()
+                : matchinfo.fechaHasta.getMonth()}/${matchinfo.fechaHasta.getFullYear()} - ${matchinfo.fechaHasta.getHours() <= 9
+                ? "0" + matchinfo.fechaHasta.getHours()
+                : matchinfo.fechaHasta.getHours()}:${matchinfo.fechaHasta.getMinutes() <= 9
+                ? "0" + matchinfo.fechaHasta.getMinutes()
+                : matchinfo.fechaHasta.getMinutes()}hs`;
+            matchinfo.deporte =
+                matchinfo.deporte.charAt(0).toUpperCase() +
+                    matchinfo.deporte.slice(1);
             res.render("partials/matchinfo", {
                 matchinfo: matchinfo,
             });
@@ -246,15 +259,18 @@ class UserController {
             const partidos = yield userModel_1.default.listarPartidosActivos();
             const partidosFinal = partidos.map((partido) => {
                 partido.fechaHasta = `
-            ${partido.fechaHasta.getMonth() <= 9
-                    ? "0" + partido.fechaHasta.getMonth()
-                    : partido.fechaHasta.getMonth()}/${partido.fechaHasta.getDate() <= 9
+            ${partido.fechaHasta.getDate() <= 9
                     ? "0" + partido.fechaHasta.getDate()
-                    : partido.fechaHasta.getDate()}/${partido.fechaHasta.getFullYear()} - ${partido.fechaHasta.getHours() <= 9
+                    : partido.fechaHasta.getDate()}/${partido.fechaHasta.getMonth() <= 9
+                    ? "0" + partido.fechaHasta.getMonth()
+                    : partido.fechaHasta.getMonth()}/${partido.fechaHasta.getFullYear()} - ${partido.fechaHasta.getHours() <= 9
                     ? "0" + partido.fechaHasta.getHours()
                     : partido.fechaHasta.getHours()}:${partido.fechaHasta.getMinutes() <= 9
                     ? "0" + partido.fechaHasta.getMinutes()
                     : partido.fechaHasta.getMinutes()}hs`;
+                partido.deporte =
+                    partido.deporte.charAt(0).toUpperCase() +
+                        partido.deporte.slice(1);
                 return partido;
             });
             console.log(partidosFinal);

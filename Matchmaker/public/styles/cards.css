@@ -23,6 +23,7 @@
     justify-content: center;
     gap: 25px;
     height: 87%;
+    width: 100%;
 }
 .match_name_img {
     display: flex;

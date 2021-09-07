@@ -1,4 +1,4 @@
-<table border="1" margin="10%" background-color="#FFFFFF">
+<!--<table border="1" margin="10%" background-color="#FFFFFF">
     <div class="col-15">
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
@@ -29,6 +29,69 @@
             </table>
         </div>
     </div>
-</table>
+</table>-->
+<link rel="stylesheet" href="/public/styles/cards.css" />
+<link rel="stylesheet" href="/public/styles/matchinfo.css" />
+{{#if matchinfo}}
+    <div id="matchinfocards">
+        <div class="card" id="matchinfo">
 
-<a class="btn btn-info" href="../home">Volver</a>
+            <form class="card_mid" id="join_form">
+                <img
+                    class="image_match"
+                    src="../../public/images/sports/{{matchinfo.deporte}}.jpg"
+                    alt=""
+                />
+                <span class="text_match_name">{{matchinfo.nombrePartido}}</span>
+
+                <div class="inner_info_match">
+                    <span class="text_owner_name">{{matchinfo.direccion}}</span>
+                    <span class="text_owner_name">Propietario del Partido:
+                        {{matchinfo.creador}}</span>
+
+                    <span
+                        class="text_match_date"
+                    >{{matchinfo.fechaHasta}}</span>
+                    <span class="text_match_date">Deporte:
+                        {{matchinfo.deporte}}</span>
+                    <span class="text_match_time">Jugadores Faltantes:
+                        {{matchinfo.jugadoresFaltantes}}</span>
+                </div>
+                <div>
+                    <input class="btn_join" type="submit" value="Unirse" />
+                </div>
+            </form>
+
+            <div class="card_mid right">
+                <h1>Jugadores</h1>
+
+                <ul class="team_one_container">
+                    <li>Axel Rojas</li>
+                    <li>Joaquin Giordano</li>
+                    <li>Martin Brynkier</li>
+                    <li>Ramiro Puma</li>
+                    <li>Valentino Miotti</li>
+                </ul>
+                <h4>VS</h4>
+
+                <ul class="team_two_container">
+                    <li>Mauricio Brynkier</li>
+                    <li>Oriana Carrizo</li>
+                    <li>Marcos Brynkier</li>
+                    <li>Sergio Brynkier</li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="card" id="chat_container">
+            <h1>CHAT IN PROGRESS</h1>
+        </div>
+    </div>
+
+{{else}}
+
+    <span>No hay partidos</span>
+
+{{/if}}
+<!--
+<a class="btn btn-info" href="../home">Volver</a>-->
