@@ -42,17 +42,44 @@ class UserModel {
         return __awaiter(this, void 0, void 0, function* () {
             //!      OPTIMIZAR CON UNA VIEW EN DB
             //!---------------------------------------------
-            const sports = yield this.listarDeportes();
-            const users = yield this.listarUsuariosOwners();
+            /*
+            const sports = await this.listarDeportes()
+            const users = await this.listarUsuariosOwners()
+            */
             //!---------------------------------------------
-            const partidos = yield this.db.query("SELECT * FROM partido where idEstadoPartido=1 and fechaHasta >now() and jugadoresFaltantes>0 and idEstadoPartido=1");
-            partidos[0] = partidos[0].map((partido) => {
-                let sport = sports.filter((sport) => sport.id == partido.idDeporte);
-                let owner = users.filter((user) => user.id == partido.idUsuarioOwner);
-                sport = sport[0];
-                owner = owner[0];
-                return Object.assign(Object.assign({}, partido), { ownerInfo: Object.assign({}, owner), sportInfo: Object.assign({}, sport) });
-            });
+            /*
+            const partidos = await this.db.query(
+                "SELECT * FROM partido where idEstadoPartido=1 and fechaHasta >now() and jugadoresFaltantes>0 and idEstadoPartido=1"
+            )
+                
+            partidos[0] = partidos[0].map(
+                (partido: {
+                    idUsuarioOwner: string | number
+                    idDeporte: string | number
+                }) => {
+                    let sport = sports.filter(
+                        (sport: { id: number | string }) =>
+                            sport.id == partido.idDeporte
+                    )
+    
+                    let owner = users.filter(
+                        (user: { id: number | string }) =>
+                            user.id == partido.idUsuarioOwner
+                    )
+    
+                    sport = sport[0]
+                    owner = owner[0]
+    
+                    return {
+                        ...partido,
+                        ownerInfo: { ...owner },
+                        sportInfo: { ...sport },
+                    }
+                }
+            )
+                
+            return partidos[0] */
+            const partidos = yield this.db.query("SELECT * FROM matchinfo where idEstadoPartido=1 and fechaHasta >now() and jugadoresFaltantes>0");
             return partidos[0];
         });
     }

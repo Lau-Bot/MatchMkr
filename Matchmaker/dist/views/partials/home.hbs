@@ -33,15 +33,15 @@ body {
                 <div class="card_mid">
                     <img
                         class="image_match"
-                        src="../../public/images/sports/{{sportInfo.nombre}}.jpg"
+                        src="../../public/images/sports/{{deporte}}.jpg"
                         alt=""
                     />
                     <span class="text_match_name">{{nombrePartido}}</span>
                     <div class="inner_info_match">
-                        <span class="text_owner_name">Propietario del Partido: {{ownerInfo.usuario}}</span>
+                        <span class="text_owner_name">Propietario del Partido: {{creador}}</span>
                         
                         <span class="text_match_date">{{fechaHasta}}</span>
-                        <span class="text_match_date">Deporte: {{sportInfo.nombre}}</span>
+                        <span class="text_match_date">Deporte: {{deporte}}</span>
                         <span class="text_match_time">Jugadores Faltantes: {{jugadoresFaltantes}}</span>
                     </div>
                 </div>
