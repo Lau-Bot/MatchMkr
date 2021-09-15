@@ -7,7 +7,7 @@ const express_1 = require("express");
 const compraController_1 = __importDefault(require("../controller/compraController"));
 class CompraRoutes {
     constructor() {
-        this.router = express_1.Router();
+        this.router = (0, express_1.Router)();
         this.config();
     }
     config() {

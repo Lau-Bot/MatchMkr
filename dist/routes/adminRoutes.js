@@ -7,7 +7,7 @@ const express_1 = require("express");
 const adminController_1 = __importDefault(require("../controller/adminController"));
 class AdminRoutes {
     constructor() {
-        this.router = express_1.Router();
+        this.router = (0, express_1.Router)();
         this.config();
     }
     config() {

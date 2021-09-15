@@ -8,7 +8,7 @@ const articulosController_1 = __importDefault(require("../controller/articulosCo
 // import userController from '../controller/articulosController';
 class ArticulosRoutes {
     constructor() {
-        this.router = express_1.Router();
+        this.router = (0, express_1.Router)();
         this.config();
     }
     config() {

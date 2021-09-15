@@ -17,7 +17,7 @@ class UserModel {
     config() {
         return __awaiter(this, void 0, void 0, function* () {
             //Parametro de conexion con la BD.
-            this.db = yield promise_1.createPool({
+            this.db = yield (0, promise_1.createPool)({
                 host: "us-cdbr-east-03.cleardb.com",
                 user: "b7231483ee9d9a",
                 password: "9d11f609",

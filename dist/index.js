@@ -17,7 +17,7 @@ const connect_flash_1 = __importDefault(require("connect-flash"));
 const adminRoutes_1 = __importDefault(require("./routes/adminRoutes"));
 class Server {
     constructor() {
-        this.app = express_1.default();
+        this.app = (0, express_1.default)();
         this.config();
         this.routes();
     }
@@ -25,7 +25,7 @@ class Server {
         //Configuraciones
         this.app.set("port", process.env.PORT || 3000);
         this.app.set("views", path_1.default.join(__dirname, "views")); //indicamos que views esta en dist y no en el modulo principal
-        this.app.engine(".hbs", express_handlebars_1.default({
+        this.app.engine(".hbs", (0, express_handlebars_1.default)({
             //nombre del motor, configuracion
             defaultLayout: "main",
             layoutsDir: path_1.default.join(this.app.get("views"), "layouts"),
@@ -35,18 +35,18 @@ class Server {
         }));
         this.app.set("view engine", ".hbs"); //ejecutamos el modulo definido
         //Middlewares
-        this.app.use(morgan_1.default("dev"));
-        this.app.use(cors_1.default()); //iniciamos cors
+        this.app.use((0, morgan_1.default)("dev"));
+        this.app.use((0, cors_1.default)()); //iniciamos cors
         this.app.use(express_1.default.json()); //habilitamos el intercambio de objetos json entre aplicaciones
         this.app.use("/public", express_1.default.static("public"));
         this.app.use(express_1.default.urlencoded({ extended: true })); //habilitamos para recibir datos a traves de formularios html.
         //configuracion del middeware de sesion
-        this.app.use(express_session_1.default({
+        this.app.use((0, express_session_1.default)({
             secret: "secret_supersecret",
             resave: false,
             saveUninitialized: false, //indica que no se guarde la sesion hasta que se inicialice
         }));
-        this.app.use(connect_flash_1.default());
+        this.app.use((0, connect_flash_1.default)());
         //Variables globales
         this.app.use((req, res, next) => {
             this.app.locals.error_session = req.flash("error_session");
