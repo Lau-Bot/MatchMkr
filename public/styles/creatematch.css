@@ -1,0 +1,124 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;900&display=swap");
+
+body {
+    font-family: roboto;
+}
+
+#nav_bar {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+}
+
+#icon {
+    width: 150px;
+}
+
+#title_container {
+    padding: 10px;
+}
+
+#bottom_container {
+    padding: 10px;
+}
+
+#bottom_container a {
+    color: #007bff !important;
+    font-size: 16px;
+}
+
+#title {
+    color: #111111;
+    margin: 0;
+}
+
+#submit_btn {
+    font-size: 16px;
+    width: 350px;
+    padding: 14px;
+    border-radius: 5px;
+    background: #007bff !important;
+    border: 0px;
+    color: #ffffff;
+    border-radius: 5px;
+    outline: none;
+    -webkit-box-shadow: -1px 0px 6px 2px rgb(0 0 0 / 37%);
+    box-shadow: -1px 1px 3px 2px rgb(0 0 0 / 15%);
+}
+
+#submit_btn:hover {
+    background: #006de2 !important;
+    border: 0px;
+    cursor: pointer;
+    transition: 0.2s !important;
+}
+
+.textbox {
+    font-family: roboto;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px none #d8d8d8;
+    border-radius: 5px;
+    outline: none;
+    padding: 14px;
+    font-size: 16px;
+    -webkit-box-shadow: -1px 0px 6px 2px rgb(0 0 0 / 37%);
+    box-shadow: -1px 1px 3px 2px rgb(0 0 0 / 5%);
+}
+#login_card {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    align-items: center;
+    border-radius: 5px;
+    -webkit-box-shadow: -1px 0px 6px 2px rgb(0 0 0 / 37%);
+    box-shadow: -1px 0px 6px 2px rgb(0 0 0 / 37%);
+}
+#container {
+    width: 100%;
+    height: calc(100% - 160px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@media only screen and (min-width: 830px) {
+    .textbox {
+        width: 320px;
+    }
+
+    #submit_btn {
+        width: 320px;
+    }
+    #login_card {
+        width: 400px;
+    }
+}
+
+@media only screen and (max-width: 830px) {
+    .textbox {
+        width: 320px;
+    }
+    #submit_btn {
+        width: 320px;
+    }
+    #login_card {
+        width: 400px;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .textbox {
+        width: calc(100% - 50px);
+    }
+
+    #submit_btn {
+        width: calc(100% - 50px);
+    }
+
+    #login_card {
+        margin: 20px;
+        width: 100%;
+    }
+}
