@@ -7,7 +7,7 @@ class AdminModel {
         this.config(); //aplicamos la conexion con la BD.
     }
 
-    async config() {//Parametro de conexion con la BD.
+    async config() {//Parametro de conexion con BD.
         this.db = await createPool({
             host: "us-cdbr-east-03.cleardb.com",
             user: "b7231483ee9d9a",
