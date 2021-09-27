@@ -277,6 +277,44 @@ class UserController {
             matchinfo: matchinfo,
         })
     }
+    public async showmatchinfojoined(req: Request, res: Response) {
+        if (!req.session.auth) {
+            req.flash(
+                "error_session",
+                "Debes iniciar sesion para crear un partido"
+            )
+            res.redirect("./error")
+            //res.redirect("/");
+        }
+        console.log(req.params.id)
+        const { id } = req.params
+        const matchinfo = await userModel.showmatchinfo(id)
+        matchinfo.fechaHasta = `
+        ${
+            matchinfo.fechaHasta.getDate() <= 9
+                ? "0" + matchinfo.fechaHasta.getDate()
+                : matchinfo.fechaHasta.getDate()
+        }/${
+            matchinfo.fechaHasta.getMonth() <= 9
+                ? "0" + matchinfo.fechaHasta.getMonth()
+                : matchinfo.fechaHasta.getMonth()
+        }/${matchinfo.fechaHasta.getFullYear()} - ${
+            matchinfo.fechaHasta.getHours() <= 9
+                ? "0" + matchinfo.fechaHasta.getHours()
+                : matchinfo.fechaHasta.getHours()
+        }:${
+            matchinfo.fechaHasta.getMinutes() <= 9
+                ? "0" + matchinfo.fechaHasta.getMinutes()
+                : matchinfo.fechaHasta.getMinutes()
+        }hs`
+
+        matchinfo.deporte =
+            matchinfo.deporte.charAt(0).toUpperCase() +
+            matchinfo.deporte.slice(1)
+        res.render("partials/matchinfojoined", {
+            matchinfo: matchinfo,
+        })
+    }
 
     public async listarPartidosActivos(req: Request, res: Response) {
         if (!req.session.auth) {
