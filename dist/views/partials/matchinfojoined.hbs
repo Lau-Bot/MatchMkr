@@ -32,6 +32,7 @@
 </table>-->
 <link rel="stylesheet" href="/public/styles/cards.css" />
 <link rel="stylesheet" href="/public/styles/matchinfo.css" />
+<link rel="stylesheet" href="/public/styles/chat.css" />
 {{#if matchinfo}}
     <div id="matchinfocards">
         <div class="card" id="matchinfo">
@@ -82,9 +83,76 @@
             </div>
         </div>
         <div class="card" id="chat_container">
-            <h1>CHAT IN PROGRESS</h1>
+            <form id="chat_box" autocomplete="off">
+                <div id="connected_users_container">
+                    <p id="connected_users">Usuarios conectados: 0</p>
+                </div>
+
+                <ul id="text_container">
+
+                </ul>
+                <div id="send_msg_container">
+                    <input id="message_box" type="text" />
+                    <input id="send_btn" type="submit" value="Send" />
+                </div>
+
+            </form>
+
         </div>
     </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+
+    {{! prettier-ignore }}
+    <script>
+     
+        let socket   = io.connect()
+        socket.emit("create","{{matchinfo.nombrePartido}}")
+        const chatForm = document.getElementById("chat_box")
+        const messageBox = document.getElementById("message_box")
+        const textContainer = document.getElementById("text_container")
+        const connectedUsersText = document.getElementById("connected_users")
+
+        socket.on("users quantity update",(quantity)=>{
+
+            connectedUsersText.innerHTML = ""
+
+            let senderElement = document.createElement("b")
+            let quantityElement = document.createElement("span")
+
+            senderElement.textContent = "Usuarios conectados:"
+            quantityElement.textContent = quantity
+
+            connectedUsersText.appendChild(senderElement)
+            connectedUsersText.appendChild(quantityElement)
+
+        })
+
+        socket.on("chat message",(sender,msg)=>{
+            
+            let msgLi = document.createElement("li")
+            let senderContainer = document.createElement("b")
+            let msgContainer = document.createElement("span")
+
+            msgLi.appendChild(senderContainer)
+            msgLi.appendChild(msgContainer)
+            textContainer.appendChild(msgLi)
+
+            msgContainer.textContent = msg
+            senderContainer.textContent = sender +":"
+
+            textContainer.scrollBy(0,100)
+            
+        })
+        
+        chatForm.addEventListener("submit",(e)=>{
+            e.preventDefault()
+            if(messageBox.value){
+                socket.emit('chat message',"Mauricio Brynkier", messageBox.value)
+                messageBox.value = ""
+            }
+        })
+    </script>
 
 {{else}}
 

@@ -15,63 +15,98 @@ const compraRoutes_1 = __importDefault(require("./routes/compraRoutes"));
 const express_session_1 = __importDefault(require("express-session"));
 const connect_flash_1 = __importDefault(require("connect-flash"));
 const adminRoutes_1 = __importDefault(require("./routes/adminRoutes"));
-class Server {
+const socket_io_1 = require("socket.io");
+const http_1 = __importDefault(require("http"));
+class AppServer {
     constructor() {
         this.app = (0, express_1.default)();
+        this.server = http_1.default.createServer(this.app);
+        this.io = new socket_io_1.Server(this.server);
+        this.startChat();
         this.config();
         this.routes();
     }
+    startChat() {
+        let { io } = this;
+        let usersConnected = [];
+        io.on("connection", (socket) => {
+            // La room es el id del Partido
+            socket.on("create", (room) => {
+                socket.join(room);
+                if (!usersConnected[room])
+                    usersConnected[room] = 0;
+                usersConnected[room] += 1;
+                io.sockets
+                    .in(room)
+                    .emit("users quantity update", usersConnected[room]);
+                console.log("an user connected");
+                socket.on("chat message", (sender, msg) => {
+                    io.sockets.in(room).emit("chat message", sender, msg);
+                    console.log(`${sender}: ${msg}`);
+                });
+                socket.on("disconnect", () => {
+                    usersConnected[room] -= 1;
+                    io.sockets
+                        .in(room)
+                        .emit("users quantity update", usersConnected[room]);
+                    console.log("user disconnected");
+                });
+            });
+        });
+    }
     config() {
+        let { app } = this;
         //Configuraciones
-        this.app.set("port", process.env.PORT || 3000);
-        this.app.set("views", path_1.default.join(__dirname, "views")); //indicamos que views esta en dist y no en el modulo principal
-        this.app.engine(".hbs", (0, express_handlebars_1.default)({
+        app.set("port", process.env.PORT || 3000);
+        app.set("views", path_1.default.join(__dirname, "views")); //indicamos que views esta en dist y no en el modulo principal
+        app.engine(".hbs", (0, express_handlebars_1.default)({
             //nombre del motor, configuracion
             defaultLayout: "main",
-            layoutsDir: path_1.default.join(this.app.get("views"), "layouts"),
-            partialsDir: path_1.default.join(this.app.get("views"), "partials"),
+            layoutsDir: path_1.default.join(app.get("views"), "layouts"),
+            partialsDir: path_1.default.join(app.get("views"), "partials"),
             extname: "hbs",
             helpers: require("./lib/handlebars"), //definimos donde estan los helpers
         }));
-        this.app.set("view engine", ".hbs"); //ejecutamos el modulo definido
+        app.set("view engine", ".hbs"); //ejecutamos el modulo definido
         //Middlewares
-        this.app.use((0, morgan_1.default)("dev"));
-        this.app.use((0, cors_1.default)()); //iniciamos cors
-        this.app.use(express_1.default.json()); //habilitamos el intercambio de objetos json entre aplicaciones
-        this.app.use("/public", express_1.default.static("public"));
-        this.app.use(express_1.default.urlencoded({ extended: true })); //habilitamos para recibir datos a traves de formularios html.
+        app.use((0, morgan_1.default)("dev"));
+        app.use((0, cors_1.default)()); //iniciamos cors
+        app.use(express_1.default.json()); //habilitamos el intercambio de objetos json entre aplicaciones
+        app.use("/public", express_1.default.static("public"));
+        app.use(express_1.default.urlencoded({ extended: true })); //habilitamos para recibir datos a traves de formularios html.
         //configuracion del middeware de sesion
-        this.app.use((0, express_session_1.default)({
+        app.use((0, express_session_1.default)({
             secret: "secret_supersecret",
             resave: false,
             saveUninitialized: false, //indica que no se guarde la sesion hasta que se inicialice
         }));
-        this.app.use((0, connect_flash_1.default)());
+        app.use((0, connect_flash_1.default)());
         //Variables globales
-        this.app.use((req, res, next) => {
-            this.app.locals.error_session = req.flash("error_session");
-            this.app.locals.confirmacion = req.flash("confirmacion");
-            this.app.locals.login = req.session.auth;
-            this.app.locals.Articulo_Eliminado =
-                req.flash("Articulo_Eliminado");
-            this.app.locals.Articulo_Modificado = req.flash("Articulo_Modificado");
-            this.app.locals.Articulo_Agregado = req.flash("Articulo_Agregado");
+        app.use((req, res, next) => {
+            app.locals.error_session = req.flash("error_session");
+            app.locals.confirmacion = req.flash("confirmacion");
+            app.locals.login = req.session.auth;
+            app.locals.Articulo_Eliminado = req.flash("Articulo_Eliminado");
+            app.locals.Articulo_Modificado = req.flash("Articulo_Modificado");
+            app.locals.Articulo_Agregado = req.flash("Articulo_Agregado");
             next();
         });
     }
     routes() {
-        this.app.use(indexRoutes_1.default);
-        this.app.use("/user", userRoutes_1.default);
-        this.app.use("/articulos", articulosRoutes_1.default);
-        this.app.use("/compra", compraRoutes_1.default);
-        this.app.use("/admin", adminRoutes_1.default);
+        let { app } = this;
+        app.use(indexRoutes_1.default);
+        app.use("/user", userRoutes_1.default);
+        app.use("/articulos", articulosRoutes_1.default);
+        app.use("/compra", compraRoutes_1.default);
+        app.use("/admin", adminRoutes_1.default);
     }
     start() {
-        this.app.listen(this.app.get("port"), () => {
-            console.log("Sever escuchando" + this.app.get("port"));
+        let { server, app } = this;
+        server.listen(app.get("port"), () => {
+            console.log("Sever escuchando" + app.get("port"));
         });
     }
 }
-const server = new Server();
+const server = new AppServer();
 server.start(); //Ejecutamos el metodo start en inica el server
 //# sourceMappingURL=index.js.map

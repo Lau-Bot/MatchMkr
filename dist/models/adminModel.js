@@ -12,58 +12,67 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const promise_1 = require("mysql2/promise");
 class AdminModel {
     constructor() {
-        this.config(); //aplicamos la conexion con la BD.
-    }
-    config() {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.db = yield (0, promise_1.createPool)({
-                host: "us-cdbr-east-03.cleardb.com",
-                user: "b7231483ee9d9a",
-                password: "9d11f609",
-                database: "heroku_3eb19d65a2b4b11",
-                connectionLimit: 10,
-            });
+        this.db = (0, promise_1.createPool)({
+            host: "us-cdbr-east-03.cleardb.com",
+            user: "b7231483ee9d9a",
+            password: "9d11f609",
+            database: "heroku_3eb19d65a2b4b11",
+            connectionLimit: 1000,
         });
     }
     listararticulos() {
         return __awaiter(this, void 0, void 0, function* () {
-            const articulos = yield this.db.query('SELECT * FROM variedades');
+            const connection = yield this.db.getConnection();
+            const articulos = yield connection.query("SELECT * FROM variedades");
             //console.log(usuarios[0]);
             //devuelve tabla mas propiedades. Solo debemos devolver tabla. Posicion 0 del array devuelto.
+            connection.release();
             return articulos[0];
         });
     }
     listarpedidos() {
         return __awaiter(this, void 0, void 0, function* () {
-            const articulos = yield this.db.query('SELECT * FROM pedidos');
+            let connection = yield this.db.getConnection();
+            const articulos = yield connection.query("SELECT * FROM pedidos");
+            connection.release();
             return articulos[0];
         });
     }
     crear(descripcion, precio) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = (yield this.db.query("INSERT INTO variedades (nombre, precio) values(?, ?)", [descripcion, precio]))[0].affectedRows;
+            let connection = yield this.db.getConnection();
+            const result = JSON.parse(JSON.stringify(yield connection.query("INSERT INTO variedades (nombre, precio) values(?, ?)", [descripcion, precio])))[0].affectedRows;
+            connection.release();
             console.log(result);
             return result;
         });
     }
     actualizar(id, descripcion, precio) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = (yield this.db.query('UPDATE variedades SET nombre = ?, precio = ?  WHERE ID = ?', [descripcion, precio, id]))[0].affectedRows;
+            let connection = yield this.db.getConnection();
+            const result = JSON.parse(JSON.stringify(yield connection.query("UPDATE variedades SET nombre = ?, precio = ?  WHERE ID = ?", [descripcion, precio, id])))[0].affectedRows;
+            connection.release();
             console.log(result);
             return result;
         });
     }
     eliminar(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const art = (yield this.db.query('DELETE FROM variedades WHERE ID = ?', [id]))[0].affectedRows;
+            let connection = yield this.db.getConnection();
+            const art = JSON.parse(JSON.stringify(yield connection.query("DELETE FROM variedades WHERE ID = ?", [
+                id,
+            ])))[0].affectedRows;
+            connection.release();
             return art;
         });
     }
     buscarNombre(descripcion) {
         return __awaiter(this, void 0, void 0, function* () {
-            const encontrado = yield this.db.query('SELECT * FROM variedades WHERE nombre = ?', [descripcion]);
+            let connection = yield this.db.getConnection();
+            const encontrado = yield connection.query("SELECT * FROM variedades WHERE nombre = ?", [descripcion]);
             if (encontrado.length > 1)
                 return encontrado[0][0];
+            connection.release();
             return null;
         });
     }

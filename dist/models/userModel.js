@@ -12,29 +12,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const promise_1 = require("mysql2/promise");
 class UserModel {
     constructor() {
-        this.config(); //aplicamos la conexion con la BD.
-    }
-    config() {
-        return __awaiter(this, void 0, void 0, function* () {
-            //Parametro de conexion con la BD.
-            this.db = yield (0, promise_1.createPool)({
-                host: "us-cdbr-east-03.cleardb.com",
-                user: "b7231483ee9d9a",
-                password: "9d11f609",
-                database: "heroku_3eb19d65a2b4b11",
-                connectionLimit: 50,
-            });
+        this.db = (0, promise_1.createPool)({
+            host: "us-cdbr-east-03.cleardb.com",
+            user: "b7231483ee9d9a",
+            password: "9d11f609",
+            database: "heroku_3eb19d65a2b4b11",
+            connectionLimit: 1000,
         });
     }
     listarDeportes() {
         return __awaiter(this, void 0, void 0, function* () {
-            let sports = yield this.db.query("SELECT * FROM deporte");
+            const connection = yield this.db.getConnection();
+            let sports = yield connection.query("SELECT * FROM deporte");
+            connection.release();
             return sports[0];
         });
     }
     listarUsuariosOwners() {
         return __awaiter(this, void 0, void 0, function* () {
-            let owner = yield this.db.query("SELECT id,usuario, elo, email FROM usuario");
+            const connection = yield this.db.getConnection();
+            let owner = yield connection.query("SELECT id,usuario, elo, email FROM usuario");
+            connection.release();
             return owner[0];
         });
     }
@@ -79,13 +77,17 @@ class UserModel {
             )
                 
             return partidos[0] */
-            const partidos = yield this.db.query("SELECT * FROM matchinfo where idEstadoPartido=1 and fechaHasta >now() and jugadoresFaltantes>0");
+            const connection = yield this.db.getConnection();
+            const partidos = yield connection.query("SELECT * FROM matchinfo where idEstadoPartido=1 and fechaHasta >now() and jugadoresFaltantes>0");
+            connection.release();
             return partidos[0];
         });
     }
     listarPartidosCreados(idUsuarioOwner) {
         return __awaiter(this, void 0, void 0, function* () {
-            const partidoCreado = yield this.db.query("SELECT * FROM partido where idEstadoPartido=1 and idUsuarioOwner = ?", [idUsuarioOwner]);
+            const connection = yield this.db.getConnection();
+            const partidoCreado = yield connection.query("SELECT * FROM partido where idEstadoPartido=1 and idUsuarioOwner = ?", [idUsuarioOwner]);
+            connection.release();
             return partidoCreado[0];
         });
     }
@@ -93,7 +95,9 @@ class UserModel {
         return __awaiter(this, void 0, void 0, function* () {
             //Devuelve todas las filas de la tabla usuario
             //const db=this.connection;
-            const usuarios = yield this.db.query("SELECT * FROM usuario");
+            const connection = yield this.db.getConnection();
+            const usuarios = yield connection.query("SELECT * FROM usuario");
+            connection.release();
             //console.log(usuarios[0]);
             //devuelve tabla mas propiedades. Solo debemos devolver tabla. Posicion 0 del array devuelto.
             return usuarios[0];
@@ -103,10 +107,12 @@ class UserModel {
     //Si no la encuentra devuelve null
     buscarId(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const encontrado = yield this.db.query("SELECT * FROM usuario WHERE id = ?", [id]);
+            const connection = yield this.db.getConnection();
+            const encontrado = yield connection.query("SELECT * FROM usuario WHERE id = ?", [id]);
             //Ojo la consulta devuelve una tabla de una fila. (Array de array) Hay que desempaquetar y obtener la unica fila al enviar
             if (encontrado.length > 1)
                 return encontrado[0][0];
+            connection.release;
             return null;
         });
     }
@@ -114,37 +120,45 @@ class UserModel {
     //Si no la encuentra devuelve null
     buscarNombre(usuario) {
         return __awaiter(this, void 0, void 0, function* () {
-            const encontrado = yield this.db.query("SELECT * FROM usuario WHERE usuario = ?", [usuario]);
+            const connection = yield this.db.getConnection();
+            const encontrado = yield connection.query("SELECT * FROM usuario WHERE usuario = ?", [usuario]);
             //Ojo la consulta devuelve una tabla de una fila. (Array de array) Hay que desempaquetar y obtener la unica fila al enviar
             if (encontrado.length > 1)
                 return encontrado[0][0];
+            connection.release();
             return null;
         });
     }
     buscarMail(email) {
         return __awaiter(this, void 0, void 0, function* () {
-            const encontrado = yield this.db.query("SELECT * FROM usuario WHERE email = ?", [email]);
+            const connection = yield this.db.getConnection();
+            const encontrado = yield connection.query("SELECT * FROM usuario WHERE email = ?", [email]);
             //Ojo la consulta devuelve una tabla de una fila. (Array de array) Hay que desempaquetar y obtener la unica fila al enviar
             if (encontrado.length > 1)
                 return encontrado[0][0];
+            connection.release();
             return null;
         });
     }
     //Devuelve 1 si logro crear un nuevo usuario de la tabla usuarios
     crear(usuario) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = (yield this.db.query("INSERT INTO usuario SET ?", [usuario]))[0].affectedRows;
+            const connection = yield this.db.getConnection();
+            const result = JSON.parse(JSON.stringify(yield connection.query("INSERT INTO usuario SET ?", [usuario])))[0].affectedRows; //@ts-ignore
             console.log(result);
+            connection.release();
             return result;
         });
     }
     //Devuelve 1 si logro actualizar el usuario indicado por id
     actualizar(usuario, id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = (yield this.db.query("UPDATE usuario SET ? WHERE ID = ?", [
+            const connection = yield this.db.getConnection();
+            const result = JSON.parse(JSON.stringify(yield connection.query("UPDATE usuario SET ? WHERE ID = ?", [
                 usuario,
                 id,
-            ]))[0].affectedRows;
+            ])))[0].affectedRows; //@ts-ignore
+            connection.release();
             console.log(result);
             return result;
         });
@@ -152,14 +166,17 @@ class UserModel {
     //Devuelve 1 si logro eliminar el usuario indicado por id
     eliminar(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = (yield this.db.query("DELETE FROM usuario WHERE ID = ?", [id]))[0].affectedRows;
+            const connection = yield this.db.getConnection();
+            const user = JSON.parse(JSON.stringify(yield connection.query("DELETE FROM usuario WHERE ID = ?", [id])))[0].affectedRows; //@ts-ignore
+            connection.release();
             console.log(user);
             return user;
         });
     }
     creatematch(match, number) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = (yield this.db.query("INSERT INTO partido (nombrePartido, idUsuarioOwner, fechaDesde, fechaHasta, idEstadoPartido, direccion, idDeporte, jugadoresFaltantes) VALUES  (?,?,?,?,?,?,?,?)", [
+            const connection = yield this.db.getConnection();
+            const result = JSON.parse(JSON.stringify(yield connection.query("INSERT INTO partido (nombrePartido, idUsuarioOwner, fechaDesde, fechaHasta, idEstadoPartido, direccion, idDeporte, jugadoresFaltantes) VALUES  (?,?,?,?,?,?,?,?)", [
                 match.nombrePartido,
                 number,
                 Date.now(),
@@ -168,15 +185,19 @@ class UserModel {
                 match.direccion,
                 Number(match.selectedSport),
                 match.jugadoresFaltantes,
-            ]))[0].affectedRows;
+            ])))[0].affectedRows; //@ts-ignore
+            connection.release();
             return result;
         });
     }
     showmatchinfo(id) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log(id);
-            const partido = yield this.db.query("SELECT * FROM matchinfo WHERE id = ?", [id]);
+            const connection = yield this.db.getConnection();
+            const partido = yield connection.query("SELECT * FROM matchinfo WHERE id = ?", [id]);
+            //@ts-ignore
             const result = partido[0][0];
+            connection.release();
             return result;
         });
     }
