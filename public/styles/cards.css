@@ -16,6 +16,10 @@
     box-shadow: -1px 0px 6px 2px rgba(0, 0, 0, 0.37);
 }
 
+.players {
+    font-size: 2rem;
+}
+
 .card_mid {
     align-items: center;
     display: flex;
@@ -40,6 +44,20 @@
     font-weight: bold;
     font-size: 20px;
     outline: none;
+}
+
+.btn_joinPartido {
+    background: #007bff !important;
+    border: 0px;
+    width: 100%;
+    color: #ffffff;
+    border-radius: 5px;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 20px;
+    outline: none;
+    margin-top: 3rem;
+    margin-left: 4.6rem;
 }
 
 .btn_join:hover {
@@ -73,7 +91,8 @@
     grid-auto-rows: minmax(100px, auto);
 }
 .text_match_name {
-    font-size: 40px;
+    font-size: 25px;
+    font-weight: 600;
 }
 
 .text_owner_name {

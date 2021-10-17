@@ -1,71 +1,79 @@
 <html lang="en">
-    <style>
-        body { /*background-image:
+<style>
+    body {
+        /*background-image:
         url('https://vivo247.com/wp-content/uploads/2020/08/futbol5-25082020.jpg');*/
         background-image: url("/public/images/background.jpg");
-        background-position: center; background-repeat: no-repeat;
-        background-size: cover; }
-    </style>
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
 
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta
-            name="viewport"
-            content="width={device-width}, initial-scale=1.0"
-        />
-        <link rel="stylesheet" href="/public/styles/navbar.css" />
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width={device-width}, initial-scale=1.0" />
+    <link rel="stylesheet" href="/public/styles/navbar.css" />
 
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-            integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
-            crossorigin="anonymous"
-        />
-        <script
-            src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-            crossorigin="anonymous"
-        ></script>
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
-            crossorigin="anonymous"
-        ></script>
-        <title>MatchMker</title>
-    </head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+    <title>MatchMker</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', nav)
+        function nav() {
+            const burger = document.querySelector('.burger');
+            const nav = document.querySelector('.main-nav');
+            burger.addEventListener('click', () => {
+                nav.classList.toggle('show')
+            })
+        }
+    </script>
+</head>
 
-    <body>
+<body>
 
-        <nav class="topbar">
-            <div class="topbar_left">
-                <img
-                    class="matchmaker_icon"
-                    src="/public/images/matchmaker.svg"
-                    alt=""
-                />
+    <nav class="topbar">
+        <div class="topbar_left">
+            <img class="matchmaker_icon" src="/public/images/matchmaker.svg" alt="" />
+        </div>
+        {{!-- <div class="topbar_right"> --}}
+            {{!-- {{#if mi_session}}
+            <div class="computer">
+                <a class="sesion_btn" href="../user/salir">Salir</a>
+                <a class="sesion_btn" href="/user/crearpartido">Crear partido</a>
             </div>
-            <div class="topbar_right">
-                {{#if mi_session}}
-                    <div class="computer">
-                        <a class="sesion_btn" href="../user/salir">Salir</a>
-                        <a class="sesion_btn" href="/user/crearpartido">Crear
-                            Partido</a>
-                    </div>
-                    <div class="mobile">
-                        <button class="menu_button">
-                            <img src="/public/images/menu.svg" alt="" />
-                        </button>
+            <div class="mobile">
+                <button class="menu_button">
+                    <img src="/public/images/menu.svg" alt="" />
+                </button>
 
-                    </div>
-                {{/if}}
             </div>
-        </nav>
+            {{/if}} --}}
+            <nav class="main-nav">
+                <ul class="nav-links">
+                    <li><a class="sesion_btn" href="../user/salir">Salir</a></li>
+                    <li><a class="sesion_btn" href="/user/crearpartido">Crear partido</a></li>
+                    <li><a class="sesion_btn" href="/user/home">Inicio</a></li>
+                </ul>
+                <div class="burger">
+                    <div class="line line1"></div>
+                    <div class="line line2"></div>
+                    <div class="line line3"></div>
+                </div>
+            </nav>
+    </nav>
 
-        {{{body}}}
-        <!-- {{#if mi_session}}
+    {{{body}}}
+    <!-- {{#if mi_session}}
             <a class="btn btn-danger" href="../user/salir">Salir</a>
         {{/if}}-->
-    </body>
+</body>
 
 </html>
