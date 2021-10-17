@@ -57,6 +57,7 @@
             </div>
             {{/if}} --}}
             <nav class="main-nav">
+                {{#if mi_session}}
                 <ul class="nav-links">
                     <li><a class="sesion_btn" href="../user/salir">Salir</a></li>
                     <li><a class="sesion_btn" href="/user/crearpartido">Crear partido</a></li>
@@ -67,6 +68,7 @@
                     <div class="line line2"></div>
                     <div class="line line3"></div>
                 </div>
+                {{/if}} 
             </nav>
     </nav>
 

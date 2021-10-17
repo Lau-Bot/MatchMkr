@@ -98,11 +98,13 @@
     display: none;
     padding: 0.5rem;
     cursor: pointer;
+    margin-left: 5rem;
   }
   .line {
     height: 2px;
     width: 35px;
     margin: 0.5rem 0;
+    margin-left: 3rem;
     background: #daf8e3;
     transition: transform 0.75s ease, opacity 0.75s ease;
     }
