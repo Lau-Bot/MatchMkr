@@ -33,57 +33,67 @@
 <link rel="stylesheet" href="/public/styles/cards.css" />
 <link rel="stylesheet" href="/public/styles/matchinfo.css" />
 {{#if matchinfo}}
-<div id="matchinfocards">
-    <div class="card" id="matchinfo">
+    <div id="matchinfocards">
+        <div class="card" id="matchinfo">
 
-        <form class="card_mid" id="join_form" method="GET" action="../matchinfojoined/{{matchinfo.id}}">
-            <img class="image_match" src="../../public/images/sports/{{matchinfo.deporte}}.jpg" alt="" />
-            <span class="text_match_name">{{matchinfo.nombrePartido}}</span>
+            <form
+                class="card_mid"
+                id="join_form"
+                method="GET"
+                action="../matchinfojoined/{{matchinfo.id}}"
+            >
+                <img
+                    class="image_match"
+                    src="../../public/images/sports/{{matchinfo.deporte}}.jpg"
+                    alt=""
+                />
+                <span class="text_match_name">{{matchinfo.nombrePartido}}</span>
 
-            <div class="inner_info_match">
-                <span class="text_owner_name">{{matchinfo.direccion}}</span>
-                <span class="text_owner_name">Propietario del Partido:
-                    {{matchinfo.creador}}</span>
+                <div class="inner_info_match">
+                    <span class="text_owner_name">{{matchinfo.direccion}}</span>
+                    <span class="text_owner_name">Propietario del Partido:
+                        {{matchinfo.creador}}</span>
 
-                <span class="text_match_date">{{matchinfo.fechaHasta}}</span>
-                <span class="text_match_date">Deporte:
-                    {{matchinfo.deporte}}</span>
+                    <span
+                        class="text_match_date"
+                    >{{matchinfo.fechaHasta}}</span>
+                    <span class="text_match_date">Deporte:
+                        {{matchinfo.deporte}}</span>
+                    <span class="text_match_time">Jugadores Faltantes:
+                        {{matchinfo.jugadoresFaltantes}}</span>
+                </div>
+                <div>
+                    <input class="btn_join" type="submit" value="Unirse" />
+                </div>
+            </form>
+
+            <div class="card_mid right">
+                <h1>Jugadores</h1>
+
+                <ul class="team_one_container">
+                    <li>Emiliano De Vuono</li>
+                    <li>Javier Muratore</li>
+                    <li>Pablo Antepaso</li>
+                    <li>Florencia Perea</li>
+                    <li>Juan Di biazi</li>
+                </ul>
+                <h4>VS</h4>
+
+                <ul class="team_two_container">
+                    <li>Nahuel Martinez</li>
+                    <li>Juan Unfuhrer</li>
+                    <li>Matias Bertuna</li>
+                    <li>Ariel Antepaso</li>
+
+                </ul>
             </div>
-            <div>
-                <input class="btn_joinPartido" type="submit" value="Unirse" />
-                <span class="text_match_time">
-                    Jugadores Faltantes: {{matchinfo.jugadoresFaltantes}}
-                </span>
-            </div>
-        </form>
-
-        <div class="card_mid right">
-            <h1 class='players'>Jugadores</h1>
-
-            <ul class="team_one_container">
-                <li>Emiliano De Vuono</li>
-                <li>Javier Muratore</li>
-                <li>Pablo Antepaso</li>
-                <li>Florencia Perea</li>
-                <li>Juan Di biazi</li>
-            </ul>
-            <h4>VS</h4>
-
-            <ul class="team_two_container">
-                <li>Nahuel Martinez</li>
-                <li>Juan Unfuhrer</li>
-                <li>Matias Bertuna</li>
-                <li>Ariel Antepaso</li>
-
-            </ul>
         </div>
-    </div>
 
-</div>
+    </div>
 
 {{else}}
 
-<span>No hay partidos</span>
+    <span>No hay partidos</span>
 
 {{/if}}
 <!--

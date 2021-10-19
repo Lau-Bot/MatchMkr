@@ -285,7 +285,6 @@ class UserController {
                 //res.redirect("/");
             }
             const partidos = yield userModel_1.default.listarPartidosActivos();
-            //@ts-ignore
             const partidosFinal = partidos.map((partido) => {
                 partido.fechaHasta = `
             ${partido.fechaHasta.getDate() <= 9

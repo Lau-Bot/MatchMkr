@@ -29,9 +29,9 @@ class AppServer {
     startChat() {
         let { io } = this;
         let usersConnected = [];
-        io.on("connection", (socket) => {
+        io.on("connection", socket => {
             // La room es el id del Partido
-            socket.on("create", (room) => {
+            socket.on("create", room => {
                 socket.join(room);
                 if (!usersConnected[room])
                     usersConnected[room] = 0;
@@ -62,8 +62,8 @@ class AppServer {
         app.engine(".hbs", (0, express_handlebars_1.default)({
             //nombre del motor, configuracion
             defaultLayout: "main",
-            layoutsDir: path_1.default.join(app.get("views"), "layouts"),
-            partialsDir: path_1.default.join(app.get("views"), "partials"),
+            layoutsDir: path_1.default.join(this.app.get("views"), "layouts"),
+            partialsDir: path_1.default.join(this.app.get("views"), "partials"),
             extname: "hbs",
             helpers: require("./lib/handlebars"), //definimos donde estan los helpers
         }));
@@ -101,9 +101,9 @@ class AppServer {
         app.use("/admin", adminRoutes_1.default);
     }
     start() {
-        let { server, app } = this;
-        server.listen(app.get("port"), () => {
-            console.log("Sever escuchando" + app.get("port"));
+        let { server } = this;
+        server.listen(this.app.get("port"), () => {
+            console.log("Sever escuchando" + this.app.get("port"));
         });
     }
 }

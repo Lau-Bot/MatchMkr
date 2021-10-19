@@ -83,3 +83,27 @@
     border: none;
     outline: none;
 }
+
+@media only screen and (max-width: 1280px) {
+    #chat_container {
+        min-width: 300px !important;
+    }
+}
+
+@media only screen and (max-width: 950px) and (min-width: 630px) {
+    #matchinfo {
+        flex-direction: column !important;
+        overflow-y: auto;
+        padding-top: 200px; /* !ARREGLAR ESTO */
+    }
+
+    .card_mid {
+        width: 100% !important;
+    }
+}
+@media only screen and (max-width: 630px) {
+    #chat_container {
+        min-height: 400px;
+        max-height: 400px !important;
+    }
+}

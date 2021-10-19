@@ -6,7 +6,7 @@
     padding: 20px;
 }
 #matchinfo .card_mid div {
-    width: 200px !important;
+    width: 200px;
 }
 
 #matchinfo.card {
@@ -50,4 +50,28 @@
 #chat_container.card {
     width: 33%;
     height: 100%;
+}
+
+@media only screen and (max-width: 630px) {
+    #matchinfocards {
+        position: relative;
+        flex-direction: column;
+        overflow-y: auto !important;
+        gap: 10px !important;
+        padding: 10px !important;
+    }
+
+    #matchinfo {
+        flex-direction: column !important;
+
+        gap: 40px;
+    }
+    .card_mid {
+        width: 100% !important;
+    }
+    .card {
+        width: 100% !important;
+        height: auto !important;
+        justify-content: unset !important;
+    }
 }
