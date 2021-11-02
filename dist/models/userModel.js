@@ -38,45 +38,6 @@ class UserModel {
     }
     listarPartidosActivos() {
         return __awaiter(this, void 0, void 0, function* () {
-            //!      OPTIMIZAR CON UNA VIEW EN DB
-            //!---------------------------------------------
-            /*
-            const sports = await this.listarDeportes()
-            const users = await this.listarUsuariosOwners()
-            */
-            //!---------------------------------------------
-            /*
-            const partidos = await this.db.query(
-                "SELECT * FROM partido where idEstadoPartido=1 and fechaHasta >now() and jugadoresFaltantes>0 and idEstadoPartido=1"
-            )
-                
-            partidos[0] = partidos[0].map(
-                (partido: {
-                    idUsuarioOwner: string | number
-                    idDeporte: string | number
-                }) => {
-                    let sport = sports.filter(
-                        (sport: { id: number | string }) =>
-                            sport.id == partido.idDeporte
-                    )
-    
-                    let owner = users.filter(
-                        (user: { id: number | string }) =>
-                            user.id == partido.idUsuarioOwner
-                    )
-    
-                    sport = sport[0]
-                    owner = owner[0]
-    
-                    return {
-                        ...partido,
-                        ownerInfo: { ...owner },
-                        sportInfo: { ...sport },
-                    }
-                }
-            )
-                
-            return partidos[0] */
             const connection = yield this.db.getConnection();
             const partidos = yield connection.query("SELECT * FROM matchinfo where idEstadoPartido=1 and fechaHasta >now() and jugadoresFaltantes>0");
             connection.release();
@@ -112,7 +73,7 @@ class UserModel {
             //Ojo la consulta devuelve una tabla de una fila. (Array de array) Hay que desempaquetar y obtener la unica fila al enviar
             if (encontrado.length > 1)
                 return encontrado[0][0];
-            connection.release;
+            connection.release();
             return null;
         });
     }
@@ -190,9 +151,24 @@ class UserModel {
             return result;
         });
     }
+    joinmatch(idpartido, idusuario) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const connection = yield this.db.getConnection();
+            const partido = yield connection.query("INSERT INTO `heroku_3eb19d65a2b4b11`.`partidousuario` (`idPartido`, `idUsuario`) VALUES ('?', '?')", [idpartido, idusuario]);
+            connection.release();
+            return { success: true };
+        });
+    }
+    isjoined(idpartido, idusuario) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const connection = yield this.db.getConnection();
+            const encontrado = yield connection.query("SELECT * FROM `heroku_3eb19d65a2b4b11`.`partidousuario` WHERE idPartido = ? AND idUsuario = ?", [idpartido, idusuario]);
+            connection.release();
+            return encontrado[0].length >= 1 ? true : false;
+        });
+    }
     showmatchinfo(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(id);
             const connection = yield this.db.getConnection();
             const partido = yield connection.query("SELECT * FROM matchinfo WHERE id = ?", [id]);
             //@ts-ignore

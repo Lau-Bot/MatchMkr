@@ -42,6 +42,7 @@ class UserRoutes {
         this.router.post("/crearpartido", userController_1.default.creatematch);
         this.router.get("/carrito", userController_1.default.listarPartidosCreados);
         this.router.get("/matchinfo/:id", userController_1.default.showmatchinfo);
+        this.router.post("/joinmatch/:id", userController_1.default.joinmatch);
         this.router.get("/matchinfojoined/:id", userController_1.default.showmatchinfojoined);
     }
 }
