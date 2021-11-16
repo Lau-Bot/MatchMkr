@@ -62,28 +62,24 @@
                     <span class="text_match_time">Jugadores Faltantes:
                         {{matchinfo.jugadoresFaltantes}}</span>
                 </div>
-                <div>
-                    <input class="btn_join" type="submit" value="Unirse" />
-                </div>
+                {{#if isJoinable}}
+                    <div>
+                        <input class="btn_join" type="submit" value="Unirse" />
+                    </div>
+                {{/if}}
             </form>
 
             <div class="card_mid right">
                 <h1>Jugadores</h1>
 
                 <ul class="team_one_container">
-                    <li>Emiliano De Vuono</li>
-                    <li>Javier Muratore</li>
-                    <li>Pablo Antepaso</li>
-                    <li>Florencia Perea</li>
-                    <li>Juan Di biazi</li>
-                </ul>
-                <h4>VS</h4>
-
-                <ul class="team_two_container">
-                    <li>Nahuel Martinez</li>
-                    <li>Juan Unfuhrer</li>
-                    <li>Matias Bertuna</li>
-                    <li>Ariel Antepaso</li>
+                    {{#if matchinfo.users}}
+                        {{#each matchinfo.users}}
+                            <li>{{Jugador}}</li>
+                        {{/each}}
+                    {{else}}
+                        <li>No hay jugadores en este momento</li>
+                    {{/if}}
 
                 </ul>
             </div>

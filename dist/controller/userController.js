@@ -24,7 +24,7 @@ class UserController {
             const result = yield userModel_1.default.buscarNombre(usuario);
             console.log(usuario);
             console.log(password);
-            console.log(result);
+            console.log("THIS RESULT:", result);
             if ((result === null || result === void 0 ? void 0 : result.usuario) == usuario &&
                 (result === null || result === void 0 ? void 0 : result.password) == password &&
                 (result === null || result === void 0 ? void 0 : result.rol) == true) {
@@ -32,6 +32,8 @@ class UserController {
                 req.session.auth = true;
                 req.session.adminkey = true;
                 req.session.userkey = result === null || result === void 0 ? void 0 : result.id;
+                //@ts-ignore
+                req.session.username = result.usuario;
                 res.redirect("../admin/home");
                 return;
             }
@@ -249,7 +251,8 @@ class UserController {
                     matchinfo.deporte.charAt(0).toUpperCase() +
                         matchinfo.deporte.slice(1);
                 res.render("partials/matchinfojoined", {
-                    matchinfo: matchinfo,
+                    matchinfo: Object.assign(Object.assign({}, matchinfo), { actual_user: req.session.user.usuario }),
+                    volver: true,
                 });
             }
             else {
@@ -270,7 +273,9 @@ class UserController {
                     matchinfo.deporte.charAt(0).toUpperCase() +
                         matchinfo.deporte.slice(1);
                 res.render("partials/matchinfo", {
-                    matchinfo: matchinfo,
+                    matchinfo: Object.assign(Object.assign({}, matchinfo), { actual_user: req.session.user.usuario }),
+                    isJoinable: matchinfo.jugadoresFaltantes > 0,
+                    volver: true,
                 });
             }
         });
@@ -302,7 +307,8 @@ class UserController {
                 matchinfo.deporte.charAt(0).toUpperCase() +
                     matchinfo.deporte.slice(1);
             res.render("partials/matchinfojoined", {
-                matchinfo: matchinfo,
+                matchinfo: Object.assign(Object.assign({}, matchinfo), { actual_user: req.session.user.usuario }),
+                volver: true,
             });
         });
     }
@@ -328,7 +334,8 @@ class UserController {
                 matchinfo.deporte.charAt(0).toUpperCase() +
                     matchinfo.deporte.slice(1);
             res.render("partials/matchinfojoined", {
-                matchinfo: matchinfo,
+                matchinfo: Object.assign(Object.assign({}, matchinfo), { actual_user: req.session.user.usuario }),
+                volver: true,
             });
         });
     }
@@ -378,6 +385,7 @@ class UserController {
                 //res.redirect("/");
             }
             const partidos = yield userModel_1.default.listarPartidosActivos();
+            //@ts-ignore
             const partidosFinal = partidos.map((partido) => {
                 partido.fechaHasta = `
             ${partido.fechaHasta.getDate() <= 9

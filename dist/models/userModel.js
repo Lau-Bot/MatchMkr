@@ -39,7 +39,7 @@ class UserModel {
     listarPartidosActivos() {
         return __awaiter(this, void 0, void 0, function* () {
             const connection = yield this.db.getConnection();
-            const partidos = yield connection.query("SELECT * FROM matchinfo where idEstadoPartido=1 and fechaHasta >now() and jugadoresFaltantes>0");
+            const partidos = yield connection.query("SELECT * FROM matchinfo where idEstadoPartido=1 and fechaHasta >now()");
             connection.release();
             return partidos[0];
         });
@@ -155,6 +155,7 @@ class UserModel {
         return __awaiter(this, void 0, void 0, function* () {
             const connection = yield this.db.getConnection();
             const partido = yield connection.query("INSERT INTO `heroku_3eb19d65a2b4b11`.`partidousuario` (`idPartido`, `idUsuario`) VALUES ('?', '?')", [idpartido, idusuario]);
+            yield connection.query("UPDATE `heroku_3eb19d65a2b4b11`.`partido` SET jugadoresFaltantes = jugadoresFaltantes - 1 WHERE id = ?", [idpartido]);
             connection.release();
             return { success: true };
         });
@@ -171,8 +172,12 @@ class UserModel {
         return __awaiter(this, void 0, void 0, function* () {
             const connection = yield this.db.getConnection();
             const partido = yield connection.query("SELECT * FROM matchinfo WHERE id = ?", [id]);
+            let partido_users = yield connection.query("SELECT * FROM partidonombreusuariolt5 WHERE idpartido = ?", [id]);
             //@ts-ignore
-            const result = partido[0][0];
+            let result = partido[0][0];
+            //@ts-ignore
+            result = Object.assign(Object.assign({}, result), { users: partido_users[0] });
+            console.log("UUUUUUUUUUUUUUUUUUUUUUU", result);
             connection.release();
             return result;
         });

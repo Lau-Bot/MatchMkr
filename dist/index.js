@@ -29,9 +29,9 @@ class AppServer {
     startChat() {
         let { io } = this;
         let usersConnected = [];
-        io.on("connection", socket => {
+        io.on("connection", (socket) => {
             // La room es el id del Partido
-            socket.on("create", room => {
+            socket.on("create", (room) => {
                 socket.join(room);
                 if (!usersConnected[room])
                     usersConnected[room] = 0;

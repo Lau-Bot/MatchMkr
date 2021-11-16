@@ -41,9 +41,9 @@ class AppServer {
     startChat(): void {
         let { io } = this
         let usersConnected: number[] = []
-        io.on("connection", socket => {
+        io.on("connection", (socket) => {
             // La room es el id del Partido
-            socket.on("create", room => {
+            socket.on("create", (room) => {
                 socket.join(room)
 
                 if (!usersConnected[room]) usersConnected[room] = 0
@@ -96,6 +96,7 @@ class AppServer {
         app.use(
             session({
                 secret: "secret_supersecret", //sirve para crear el hash del SSID unico
+
                 resave: false, //evita el guardado de sesion sin modificaciones
                 saveUninitialized: false, //indica que no se guarde la sesion hasta que se inicialice
             })

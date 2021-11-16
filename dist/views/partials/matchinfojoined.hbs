@@ -65,20 +65,13 @@
                 <h1>Jugadores</h1>
 
                 <ul class="team_one_container">
-                    <li>Emiliano De Vuono</li>
-                    <li>Javier Muratore</li>
-                    <li>Pablo Antepaso</li>
-                    <li>Florencia Perea</li>
-                    <li>Juan Di biazi</li>
-                </ul>
-                <h4>VS</h4>
-
-                <ul class="team_two_container">
-                    <li>Nahuel Martinez</li>
-                    <li>Juan Unfuhrer</li>
-                    <li>Matias Bertuna</li>
-                    <li>Ariel Antepaso</li>
-                    <li><b>Mauricio Brynkier</b></li>
+                    {{#if matchinfo.users}}
+                        {{#each matchinfo.users}}
+                            <li>{{Jugador}}</li>
+                        {{/each}}
+                    {{else}}
+                        <li>No hay jugadores en este momento</li>
+                    {{/if}}
                 </ul>
             </div>
         </div>
@@ -148,7 +141,7 @@
         chatForm.addEventListener("submit",(e)=>{
             e.preventDefault()
             if(messageBox.value){
-                socket.emit('chat message',"Mauricio Brynkier", messageBox.value)
+                socket.emit('chat message',"{{matchinfo.actual_user}}", messageBox.value)
                 messageBox.value = ""
             }
         })
